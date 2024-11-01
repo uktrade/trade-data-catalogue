@@ -22,5 +22,5 @@ from dataset_catalogue import views as dataset_catalogue_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", dataset_catalogue_views.dataset_catalogue_view),
+    path("", dataset_catalogue_views.DatasetCatalogueView.dataset_catalogue_view),
 ]
