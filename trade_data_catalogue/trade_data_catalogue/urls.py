@@ -18,9 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from dataset_catalogue import views as dataset_catalogue_views
+from dataset_catalogue.views import DatasetCatalogueView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", dataset_catalogue_views.DatasetCatalogueView.dataset_catalogue_view),
+    path(
+        "",
+        DatasetCatalogueView.as_view(),
+        name="dataset_catalogue_view",
+    ),
 ]
