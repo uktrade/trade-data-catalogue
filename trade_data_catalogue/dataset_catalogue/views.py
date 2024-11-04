@@ -1,15 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views import View 
-import requests
+from django.http import JsonResponse
+from django.views import View
+
+from trade_data_catalogue.utils import fetch_json_data_from_api
 
 
 class DatasetCatalogueView(View):
-    def dataset_catalogue_view(request):
-        response = requests.get('https://data.api.trade.gov.uk/v1/datasets?format=json')
-    
-        if response.status_code == 200:
-            data = response.json()
-            return JsonResponse(data)
-        else:
-            return JsonResponse({'error': 'Failed to fetch data'})
+    fetch_url = "https://data.api.trade.gov.uk/v1/datasets?format=json"
+
+    def get_all_datasets(self):
+        return fetch_json_data_from_api(self.fetch_url)
+
+    def get(self, request):
+        all_datasets = self.get_all_datasets()
+        return JsonResponse(all_datasets)
