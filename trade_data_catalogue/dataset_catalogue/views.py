@@ -16,5 +16,4 @@ class DatasetCatalogueView(TemplateView):
 
     def get(self, request):
         dataset_ids = self.get_dataset_ids()
-        print(dataset_ids)
         return render(request, self.template_name, {"dataset_ids": dataset_ids})
