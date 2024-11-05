@@ -4,6 +4,8 @@ from django.views.generic import TemplateView
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_json_data_from_api
 
+from .models import Dataset
+
 
 class DatasetCatalogueView(TemplateView):
     fetch_url = f"{BASE_API_URL}/v1/datasets?format=json"
@@ -24,5 +26,8 @@ class DatasetCatalogueView(TemplateView):
         dataset_ids = self.get_dataset_ids()
         datasets = {}
         for dataset_id in dataset_ids:
-            datasets[dataset_id] = self.get_formatted_dataset_title(dataset_id)
+            this_dataset = Dataset(dataset_id)
+            this_dataset.set_formatted_dataset_title()
+            this_dataset.set_dataset_versions()
+            datasets[dataset_id] = this_dataset
         return render(request, self.template_name, {"datasets": datasets})
