@@ -19,7 +19,8 @@ class Dataset:
         json_data = fetch_json_data_from_api(url)
         dataset_version_ids = json_data["versions"]
         dataset_versions = [version["id"] for version in dataset_version_ids]
-        return dataset_versions
+        dataset_version_length = len(dataset_versions)
+        return dataset_version_length
 
     def set_dataset_versions(self):
         self.versions = self.get_dataset_versions(f"{self.url}/versions?format=json")

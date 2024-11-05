@@ -2,7 +2,6 @@
 <h1>Dataset catalogue</h1>
 
 {% for dataset_id, dataset in datasets.items %}
-<a class="govuk-link" id="{{dataset_id}}"
-  >{{dataset.title}} {{dataset.versions}}</a
-><br />
+<a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
+<p>{{dataset.versions}} versions</p>
 {% endfor %} {% endblock content %}
