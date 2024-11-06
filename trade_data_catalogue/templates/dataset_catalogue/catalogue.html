@@ -1,8 +1,13 @@
 {% extends "base.html" %} {% block content %}
 <div class="govuk-width-container">
-  <h1>Dataset catalogue</h1>
-  <p>{{dataset_count}} datasets found</p>
-
+  <div>
+    <h1 class="govuk-heading-l">Dataset catalogue</h1>
+    <p class="govuk-body-l">Discover, access and analyse open trade data.</p>
+    <p class="govuk-body">{{dataset_count}} datasets found</p>
+    <hr
+      class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+    />
+  </div>
   {% for dataset_id, dataset in datasets.items %}
   <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
   <p>{{dataset.versions_count}} versions</p>
