@@ -1,0 +1,7 @@
+body {
+  margin: 0;
+}
+
+.govuk-header__navigation {
+  padding-left: 0;
+}
