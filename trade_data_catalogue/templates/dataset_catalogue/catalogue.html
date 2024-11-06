@@ -3,5 +3,6 @@
 
 {% for dataset_id, dataset in datasets.items %}
 <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
-<p>{{dataset.versions}} versions</p>
+<p>{{dataset.versions_count}} versions</p>
+<p>Latest version: {{dataset.latest_version}}</p>
 {% endfor %} {% endblock content %}
