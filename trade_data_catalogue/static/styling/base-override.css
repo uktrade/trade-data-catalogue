@@ -5,3 +5,11 @@ body {
 .govuk-header__navigation {
   padding-left: 0;
 }
+
+.govuk-link {
+    color: #1d70b8;
+}
+
+.latest-version {
+  text-align: right;
+}
