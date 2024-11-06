@@ -30,4 +30,10 @@ class DatasetCatalogueView(TemplateView):
             this_dataset.set_latest_version()
             datasets[dataset_id] = this_dataset
 
-        return render(request, self.template_name, {"datasets": datasets})
+        dataset_count = len(datasets)
+
+        return render(
+            request,
+            self.template_name,
+            {"datasets": datasets, "dataset_count": dataset_count},
+        )
