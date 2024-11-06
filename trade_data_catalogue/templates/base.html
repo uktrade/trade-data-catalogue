@@ -8,9 +8,43 @@
       type="text/css"
       href="{% static 'styling/govuk-frontend.min.css' %}"
     />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'styling/base-override.css' %}"
+    />
   </head>
 
   <body>
-    {% block content %}{% endblock content %}
+    {% block header %}
+    <header class="govuk-header" role="banner" data-module="govuk-header">
+      <div class="govuk-header__container govuk-width-container">
+        <div class="govuk-header__logotype">
+          <a class="govuk-header__link govuk-header__service-name"
+            >The Department for Business and Trade Data Catalogue</a
+          >
+        </div>
+        <nav aria-label="Top Level Navigation">
+          <ul id="navigation" class="govuk-header__navigation">
+            <li class="govuk-header__navigation-item">
+              <a
+                class="govuk-header__link"
+                href="{% url 'dataset_catalogue_view' %}"
+                >Dataset catalogue</a
+              >
+            </li>
+            <li class="govuk-header__navigation-item">
+              <a
+                class="govuk-header__link"
+                href="https://data.api.trade.gov.uk/"
+                target="_blank"
+                >Public Data API</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    {% endblock %} {% block content %}{% endblock content %}
   </body>
 </html>
