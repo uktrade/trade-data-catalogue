@@ -15,15 +15,12 @@ class DatasetCatalogueView(TemplateView):
         json_data = fetch_json_data_from_api(self.fetch_url)
         datasets = json_data["datasets"]
         dataset_ids = [dataset["id"] for dataset in datasets]
-        return dataset_ids
 
-    # def get_formatted_dataset_title(self, dataset_id):
-    #     dehyphenated_dataset_id =  dataset_id.replace('-', ' ')
-    #     title_cased_dataset_id = dehyphenated_dataset_id.title()
-    #     return title_cased_dataset_id
+        return dataset_ids
 
     def get(self, request):
         dataset_ids = self.get_dataset_ids()
+
         datasets = {}
         for dataset_id in dataset_ids:
             this_dataset = Dataset(dataset_id)
@@ -32,4 +29,5 @@ class DatasetCatalogueView(TemplateView):
             this_dataset.set_number_of_dataset_versions()
             this_dataset.set_latest_version()
             datasets[dataset_id] = this_dataset
+
         return render(request, self.template_name, {"datasets": datasets})
