@@ -15,7 +15,7 @@
     />
   </head>
 
-  <body>
+  <body class="govuk-template__body govuk-frontend-supported">
     {% block header %}
     <header class="govuk-header" role="banner" data-module="govuk-header">
       <div class="govuk-header__container govuk-width-container">
@@ -45,6 +45,9 @@
         </nav>
       </div>
     </header>
-    {% endblock %} {% block content %}{% endblock content %}
+    {% endblock %}
+    <main class="govuk-main-wrapper" id="main-content">
+      {% block content %} {% endblock content %}
+    </main>
   </body>
 </html>

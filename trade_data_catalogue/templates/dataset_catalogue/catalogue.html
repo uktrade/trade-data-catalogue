@@ -1,9 +1,13 @@
 {% extends "base.html" %} {% block content %}
-<h1>Dataset catalogue</h1>
-<p>{{dataset_count}} datasets found</p>
+<div class="govuk-width-container">
+  <h1>Dataset catalogue</h1>
+  <p>{{dataset_count}} datasets found</p>
 
-{% for dataset_id, dataset in datasets.items %}
-<a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
-<p>{{dataset.versions_count}} versions</p>
-<p>Latest version: {{dataset.latest_version}}</p>
-{% endfor %} {% endblock content %}
+  {% for dataset_id, dataset in datasets.items %}
+  <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
+  <p>{{dataset.versions_count}} versions</p>
+  <p>Latest version: {{dataset.latest_version}}</p>
+
+  {% endfor %}
+</div>
+{% endblock content %}
