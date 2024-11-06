@@ -9,10 +9,22 @@
     />
   </div>
   {% for dataset_id, dataset in datasets.items %}
-  <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
-  <p>{{dataset.versions_count}} versions</p>
-  <p>Latest version: {{dataset.latest_version}}</p>
-
+  <div class="dataset govuk-!-padding-top-3">
+    <h3 class="govuk-heading-m">
+      <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
+    </h3>
+    <div class="govuk-grid-row versions">
+      <div class="govuk-grid-column-one-half">
+        <p class="govuk-body">{{dataset.versions_count}} versions</p>
+      </div>
+      <div class="govuk-grid-column-one-half latest-version">
+        <p class="govuk-body">Latest version: {{dataset.latest_version}}</p>
+      </div>
+    </div>
+    <hr
+      class="govuk-section-break govuk-section-break--m govuk-section-break--visible"
+    />
+  </div>
   {% endfor %}
 </div>
 {% endblock content %}
