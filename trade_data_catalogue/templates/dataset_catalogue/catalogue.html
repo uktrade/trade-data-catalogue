@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <h1>Dataset catalogue</h1>
+<p>{{dataset_count}} datasets found</p>
 
 {% for dataset_id, dataset in datasets.items %}
 <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
