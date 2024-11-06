@@ -29,5 +29,7 @@ class DatasetCatalogueView(TemplateView):
             this_dataset = Dataset(dataset_id)
             this_dataset.set_formatted_dataset_title()
             this_dataset.set_dataset_versions()
+            this_dataset.set_number_of_dataset_versions()
+            this_dataset.set_latest_version()
             datasets[dataset_id] = this_dataset
         return render(request, self.template_name, {"datasets": datasets})
