@@ -31,6 +31,14 @@ class Dataset:
     def set_number_of_dataset_versions(self):
         self.versions_count = self.get_number_of_dataset_versions(self.versions)
 
+    def get_version_count_message(self, versions_count):
+        if versions_count > 1:
+            return f"{versions_count} versions"
+        return f"{versions_count} version"
+
+    def set_version_count_message(self):
+        self.version_count_message = self.get_version_count_message(self.versions_count)
+
     def get_latest_version(self, versions):
         latest_version = versions[0]
         return latest_version
