@@ -11,15 +11,15 @@ class DatasetCatalogueView(TemplateView):
     fetch_url = f"{BASE_API_URL}/v1/datasets?format=json"
     template_name = "dataset_catalogue/catalogue.html"
 
-    def get_dataset_ids(self):
-        json_data = fetch_json_data_from_api(self.fetch_url)
+    def get_dataset_ids(self, json_data):
         datasets = json_data["datasets"]
         dataset_ids = [dataset["id"] for dataset in datasets]
 
         return dataset_ids
 
     def get(self, request):
-        dataset_ids = self.get_dataset_ids()
+        json_data = fetch_json_data_from_api(self.fetch_url)
+        dataset_ids = self.get_dataset_ids(json_data)
 
         datasets = {}
         for dataset_id in dataset_ids:
