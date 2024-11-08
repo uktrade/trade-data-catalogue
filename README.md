@@ -1,4 +1,4 @@
-# trade-data-catalogue
+# trade-data-catalogue [![CircleCI](https://dl.circleci.com/status-badge/img/gh/uktrade/trade-data-catalogue/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/uktrade/trade-data-catalogue/tree/main)
 An open source data platform for viewing data provided by the DBT Public Data API
 
 - Does not use a database
