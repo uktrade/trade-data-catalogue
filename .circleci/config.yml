@@ -4,7 +4,7 @@ executors:
   python-executor:
     machine:
       enabled: true
-    working_directory: ~/trade_data_catalogue
+    working_directory: ~/
 
 jobs:
   install_dependencies:
@@ -36,6 +36,7 @@ jobs:
           name: Run Django tests
           command: |
             . venv/bin/activate
+            cd trade_data_catalogue
             python manage.py test
 
 workflows:
