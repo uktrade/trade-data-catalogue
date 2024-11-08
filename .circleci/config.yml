@@ -20,7 +20,7 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt 
   
-  run_tests:
+  run_django_tests:
     executor: python-executor
     steps:
       - checkout
@@ -42,4 +42,4 @@ workflows:
   version: 2
   test:
     jobs:
-      - run_tests
+      - run_django_tests
