@@ -11,16 +11,13 @@ class DatasetCatalogueView(TemplateView):
     fetch_url = f"{BASE_API_URL}/v1/datasets?format=json"
     template_name = "dataset_catalogue/catalogue.html"
 
-    def get_dataset_ids(self):
-        json_data = fetch_json_data_from_api(self.fetch_url)
+    def get_dataset_ids(self, json_data):
         datasets = json_data["datasets"]
         dataset_ids = [dataset["id"] for dataset in datasets]
 
         return dataset_ids
 
-    def get(self, request):
-        dataset_ids = self.get_dataset_ids()
-
+    def get_dataset_objects(self, dataset_ids):
         datasets = {}
         for dataset_id in dataset_ids:
             this_dataset = Dataset(dataset_id)
@@ -30,6 +27,13 @@ class DatasetCatalogueView(TemplateView):
             this_dataset.set_version_count_message()
             this_dataset.set_latest_version()
             datasets[dataset_id] = this_dataset
+
+        return datasets
+
+    def get(self, request):
+        json_data = fetch_json_data_from_api(self.fetch_url)
+        dataset_ids = self.get_dataset_ids(json_data)
+        datasets = self.get_dataset_objects(dataset_ids)
 
         dataset_count = len(datasets)
 
