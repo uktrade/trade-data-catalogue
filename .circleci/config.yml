@@ -4,7 +4,7 @@ executors:
   python-executor:
     machine:
       enabled: true
-    working_directory: ~/trade-data-catalogue
+    working_directory: ~/trade_data_catalogue
 
 jobs:
   install_dependencies:
