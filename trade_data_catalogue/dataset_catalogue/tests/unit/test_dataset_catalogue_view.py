@@ -73,5 +73,4 @@ class TestDatasetCatalogueView(TestCase):
         response = self.client.get(reverse("dataset_catalogue_view"))
 
         self.assertTemplateUsed(response, expected_template_name)
-
         self.assertEqual(response.context["dataset_count"], 1)
