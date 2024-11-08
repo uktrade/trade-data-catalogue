@@ -2,8 +2,8 @@ from unittest.mock import patch, MagicMock
 from django.test import TestCase
 from django.urls import reverse
 
-from ...views import DatasetCatalogueView
-from ...models import Dataset
+from dataset_catalogue.views import DatasetCatalogueView
+from dataset_catalogue.models import Dataset
 
 
 class TestDatasetCatalogueView(TestCase):
