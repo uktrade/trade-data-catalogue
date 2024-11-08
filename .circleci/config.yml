@@ -1,0 +1,45 @@
+version: 2.1
+
+executors:
+  python-executor:
+    machine:
+      enabled: true
+    working_directory: ~/repo
+
+jobs:
+  install_dependencies:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Python and pip
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y python3-pip python3-dev
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt 
+  
+  run_tests:
+    executor: python-executor
+    steps:
+      - checkout
+      - run:
+          name: Install Python and pip
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y python3-pip python3-dev
+            python3 -m venv venv 
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - run:
+          name: Run Django tests
+          command: |
+            . venv/bin/activate
+            python manage.py test
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - run_tests
