@@ -40,3 +40,9 @@ class TestDatasetModel(TestCase):
         dataset.versions_count = 2
         result = dataset.get_version_count_message(dataset.versions_count)
         self.assertEqual(result, "2 versions")
+    
+    def test_get_latest_version(self):
+        dataset = Dataset(id="mock-dataset")
+        dataset.versions = ["v1.0.1", "v1.0.0"]
+        result = dataset.get_latest_version(dataset.versions)
+        self.assertEqual(result, "v1.0.1")
