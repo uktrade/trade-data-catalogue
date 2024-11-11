@@ -26,5 +26,5 @@ urlpatterns = [
         "",
         DatasetCatalogueView.as_view(),
         name="dataset_catalogue_view",
-    ),
+    )
 ]
