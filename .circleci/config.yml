@@ -47,7 +47,9 @@ jobs:
       - run:
           name: Start Django server
           command: |
+            cd trade_data_catalogue
             python manage.py runserver
+            cd ..
           background: true
 
       - run:
