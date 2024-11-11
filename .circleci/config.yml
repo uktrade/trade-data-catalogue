@@ -5,21 +5,12 @@ executors:
     machine:
       enabled: true
     working_directory: ~/trade-data-catalogue
+  cypress-executor:
+    machine:
+      enabled: true
+    working_directory: ~/trade-data-catalogue
 
 jobs:
-  install_dependencies:
-    executor: python-executor
-    steps:
-      - checkout
-      - run:
-          name: Install Python and pip
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python3-pip python3-dev
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements.txt 
-  
   run_django_tests:
     executor: python-executor
     steps:
@@ -39,8 +30,22 @@ jobs:
             cd trade_data_catalogue
             python manage.py test
 
+  run_cypress_tests:
+    executor: cypress-executor
+    steps:
+      - run:
+          name: Install npm and Cypress
+          command: |
+            npm install
+            npm install cypress
+      - run:
+          name: Run Cypress tests
+          command: |
+            npx cypress run
+
 workflows:
   version: 2
   test:
     jobs:
       - run_django_tests
+      - run_cypress_tests
