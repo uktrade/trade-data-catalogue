@@ -23,4 +23,9 @@ class TestDatasetModel(TestCase):
         result = dataset.get_dataset_versions(dataset.url)
         self.assertEqual(result, ["v1.0.0"])
     
+    def test_get_number_of_dataset_versions(self):
+        dataset = Dataset(id="mock-dataset")
+        dataset.versions = ["v1.0.1", "v1.0.0"]
+        result = dataset.get_number_of_dataset_versions(dataset.versions)
+        self.assertEqual(result, 2)
     
