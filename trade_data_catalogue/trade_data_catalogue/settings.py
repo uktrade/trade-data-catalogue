@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "dataset_catalogue",
+    "django_cypress",
 ]
 
 MIDDLEWARE = [
