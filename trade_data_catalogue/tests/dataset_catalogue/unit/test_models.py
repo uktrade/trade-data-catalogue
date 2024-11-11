@@ -29,3 +29,14 @@ class TestDatasetModel(TestCase):
         result = dataset.get_number_of_dataset_versions(dataset.versions)
         self.assertEqual(result, 2)
     
+    def test_get_version_count_message_single(self):
+        dataset = Dataset(id="mock-dataset")
+        dataset.versions_count = 1
+        result = dataset.get_version_count_message(dataset.versions_count)
+        self.assertEqual(result, "1 version")
+    
+    def test_get_version_count_message_plural(self):
+        dataset = Dataset(id="mock-dataset")
+        dataset.versions_count = 2
+        result = dataset.get_version_count_message(dataset.versions_count)
+        self.assertEqual(result, "2 versions")
