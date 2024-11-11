@@ -23,6 +23,7 @@ jobs:
             python3 -m venv venv 
             . venv/bin/activate
             pip install -r requirements.txt
+
       - run:
           name: Run Django tests
           command: |
@@ -35,10 +36,31 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Python and pip
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y python3-pip python3-dev
+            python3 -m venv venv 
+            . venv/bin/activate
+            pip install -r requirements.txt
+
+      - run:
+          name: Start Django server
+          command: |
+            python manage.py runserver
+          background: true
+
+      - run:
+          name: Wait for Django server
+          command: |
+            until curl -s http://localhost:8000; do sleep 1; done
+
+      - run:
           name: Install npm and Cypress
           command: |
             npm install
             npm install cypress
+
       - run:
           name: Run Cypress tests
           command: |
