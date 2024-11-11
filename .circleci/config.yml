@@ -33,6 +33,7 @@ jobs:
   run_cypress_tests:
     executor: cypress-executor
     steps:
+      - checkout
       - run:
           name: Install npm and Cypress
           command: |
