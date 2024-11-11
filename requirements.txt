@@ -2,7 +2,6 @@ asgiref==3.8.1
 certifi==2024.8.30
 charset-normalizer==3.4.0
 Django==5.1.2
-django-cypress==1.0.1
 exceptiongroup==1.2.2
 idna==3.10
 iniconfig==2.0.0

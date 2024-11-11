@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import path
 
 from dataset_catalogue.views import DatasetCatalogueView
 
@@ -26,6 +26,5 @@ urlpatterns = [
         "",
         DatasetCatalogueView.as_view(),
         name="dataset_catalogue_view",
-    ),
-    path("", include("django_cypress.urls")),
+    )
 ]
