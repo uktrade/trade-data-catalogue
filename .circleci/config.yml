@@ -80,9 +80,9 @@ workflows:
   test:
     jobs:
       - environment_setup
-      - run_django_tests
+      - run_django_tests:
           requires:
             - environment_setup
-      - run_cypress_tests
+      - run_cypress_tests:
           requires:
             - environment_setup
