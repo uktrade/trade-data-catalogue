@@ -63,7 +63,7 @@ jobs:
       - run:
           name: Install npm and Cypress
           command: |
-            cd /home/circleci/trade-data-catalogue/trade_data_catalogue
+            cd /home/circleci/trade-data-catalogue
             npm install
             npm install cypress
 
