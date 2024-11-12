@@ -16,7 +16,6 @@ jobs:
             sudo apt-get install -y python3-pip python3-dev
             python3 -m venv venv 
             . venv/bin/activate
-            pip install -r requirements.txt
       
       - run:
           name: Install npm and Cypress
@@ -40,8 +39,8 @@ jobs:
           name: Run Django tests
           command: |
             cd /home/circleci/trade-data-catalogue
+            pip install -r requirements.txt
             . venv/bin/activate
-            pip list
             cd trade_data_catalogue
             python manage.py test
 
@@ -55,6 +54,7 @@ jobs:
           name: Start Django server
           command: |
             cd /home/circleci/trade-data-catalogue
+            pip install -r requirements.txt
             . venv/bin/activate
             cd trade_data_catalogue
             python manage.py runserver
