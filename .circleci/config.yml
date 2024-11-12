@@ -34,12 +34,12 @@ jobs:
     executor: default_executor
     steps:
       - attach_workspace:
-          at: /home/circleci/workspace
+          at: /home/circleci/trade-data-catalogue
 
       - run:
           name: Run Django tests
           command: |
-            cd /home/circleci/workspace
+            cd /home/circleci/trade-data-catalogue
             . venv/bin/activate
             cd trade_data_catalogue
             python manage.py test
@@ -48,12 +48,12 @@ jobs:
     executor: default_executor
     steps:
       - attach_workspace:
-          at: /home/circleci/workspace
+          at: /home/circleci/trade-data-catalogue
 
       - run:
           name: Start Django server
           command: |
-            cd /home/circleci/workspace
+            cd /home/circleci/trade-data-catalogue
             . venv/bin/activate
             cd trade_data_catalogue
             python manage.py runserver
