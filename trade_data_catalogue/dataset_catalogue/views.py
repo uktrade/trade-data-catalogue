@@ -30,24 +30,23 @@ class DatasetCatalogueView(TemplateView):
 
         return datasets
 
-    def get(self, request):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
         json_data = fetch_json_data_from_api(self.fetch_url)
         dataset_ids = self.get_dataset_ids(json_data)
         datasets = self.get_dataset_objects(dataset_ids)
 
-        dataset_count = len(datasets)
+        context["datasets"] = datasets
+        context["dataset_count"] = len(datasets)
 
-        return render(
-            request,
-            self.template_name,
-            {"datasets": datasets, "dataset_count": dataset_count},
-        )
+        return context
 
 
 class DatasetDetailView(TemplateView):
     template_name = "dataset_catalogue/details.html"
 
-    def get_dataset_detail_object(self, dataset_id, version):
+    def get_dataset_details_object(self, dataset_id, version):
         dataset_details = DatasetDetails(dataset_id, version)
         dataset_details.set_formatted_dataset_title()
         dataset_details.set_dataset_metadata()
@@ -55,7 +54,11 @@ class DatasetDetailView(TemplateView):
 
         return dataset_details
 
-    def get(self, request, dataset_id, version):
-        dataset = self.get_dataset_detail_object(dataset_id, version)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
-        return render(request, self.template_name, {"dataset": dataset})
+        dataset = self.get_dataset_details_object(**kwargs)
+
+        context["dataset"] = dataset
+
+        return context
