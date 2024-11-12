@@ -47,6 +47,22 @@ class Dataset:
         self.latest_version = self.get_latest_version(self.versions)
 
 
-class DatasetDetail(Dataset):
-    def __init__(self, id):
+class DatasetDetails(Dataset):
+    def __init__(self, id, version):
         super().__init__(id)
+        self.version = version
+
+    def get_dataset_metadata(self, url):
+        json_data = fetch_json_data_from_api(url)
+        if json_data is None:
+            return None
+        return json_data
+
+    def set_dataset_metadata(self):
+        self.metadata = self.get_dataset_metadata(
+            f"{self.url}/versions/{self.version}/metadata?format=csvw"
+        )
+
+    def set_description(self):
+        if "dit:databases" in self.metadata:
+            self.description = self.metadata["dit:databases"][0]["dc:title"]
