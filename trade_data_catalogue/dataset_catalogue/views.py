@@ -43,12 +43,20 @@ class DatasetCatalogueView(TemplateView):
             {"datasets": datasets, "dataset_count": dataset_count},
         )
 
+
 class DatasetDetailView(TemplateView):
     template_name = "dataset_catalogue/details.html"
-    
+
+    def get_dataset_object(self, dataset_id):
+        this_dataset = Dataset(dataset_id)
+        this_dataset.set_formatted_dataset_title()
+        this_dataset.set_dataset_versions()
+        this_dataset.set_number_of_dataset_versions()
+        this_dataset.set_version_count_message()
+        this_dataset.set_latest_version()
+
+        return this_dataset
+
     def get(self, request, dataset_id):
-        return render(
-            request,
-            self.template_name,
-            {"dataset_id": dataset_id}
-        )
+        dataset = self.get_dataset_object(dataset_id)
+        return render(request, self.template_name, {"dataset": dataset})
