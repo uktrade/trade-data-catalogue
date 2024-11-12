@@ -16,7 +16,7 @@
       <a
         class="govuk-link"
         id="{{dataset_id}}"
-        href="{% url 'dataset_detail_view' dataset_id %}"
+        href="{% url 'dataset_detail_view' dataset_id=dataset.id version=dataset.latest_version %}"
         >{{dataset.title}}</a
       ><br />
     </h3>
