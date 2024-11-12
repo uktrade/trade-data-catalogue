@@ -45,3 +45,8 @@ class Dataset:
 
     def set_latest_version(self):
         self.latest_version = self.get_latest_version(self.versions)
+
+
+class DatasetDetail(Dataset):
+    def __init__(self, id):
+        super().__init__(id)
