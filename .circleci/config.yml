@@ -41,6 +41,7 @@ jobs:
           command: |
             cd /home/circleci/trade-data-catalogue
             . venv/bin/activate
+            pip list
             cd trade_data_catalogue
             python manage.py test
 
