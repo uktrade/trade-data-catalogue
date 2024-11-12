@@ -8,6 +8,12 @@ describe("Dataset catalogue page", () => {
       cy.visit("http://127.0.0.1:8000/");
     });
 
+    it("Loads the navbar component", () => {
+      cy.get('[data-testid="navbar"]').should(
+        "exist"
+      );
+    })
+
     it("Loads dataset catalogue header successfully", () => {
       cy.get('[data-testid="dataset-catalogue-header-container"]').should(
         "exist"
