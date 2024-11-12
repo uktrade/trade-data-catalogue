@@ -1,17 +1,12 @@
 version: 2.1
 
 executors:
-  python-executor:
-    machine:
-      enabled: true
-    working_directory: ~/trade-data-catalogue
-  cypress-executor:
-    machine:
-      enabled: true
-    working_directory: ~/trade-data-catalogue
+  default_executor:
+    machine: true
 
 jobs:
   environment_setup:
+    executor: default_executor
     steps:
       - checkout
       - run:
@@ -36,7 +31,7 @@ jobs:
             - .
 
   run_django_tests:
-    executor: python-executor
+    executor: default_executor
     steps:
       - attach_workspace:
           at: /workspace
@@ -50,7 +45,7 @@ jobs:
             python manage.py test
 
   run_cypress_tests:
-    executor: cypress-executor
+    executor: default_executor
     steps:
       - attach_workspace:
           at: /workspace
