@@ -11,8 +11,7 @@ executors:
     working_directory: ~/trade-data-catalogue
 
 jobs:
-  run_django_tests:
-    executor: python-executor
+  environment_setup:
     steps:
       - checkout
       - run:
@@ -23,10 +22,29 @@ jobs:
             python3 -m venv venv 
             . venv/bin/activate
             pip install -r requirements.txt
+      
+      - run:
+          name: Install npm and Cypress
+          command: |
+            npm install
+            npm install cypress
+
+      - persist_to_workspace:
+          root: .
+          paths:
+            - venv
+            - .
+
+  run_django_tests:
+    executor: python-executor
+    steps:
+      - attach_workspace:
+          at: /workspace
 
       - run:
           name: Run Django tests
           command: |
+            cd /workspace
             . venv/bin/activate
             cd trade_data_catalogue
             python manage.py test
@@ -34,19 +52,13 @@ jobs:
   run_cypress_tests:
     executor: cypress-executor
     steps:
-      - checkout
-      - run:
-          name: Install Python and pip
-          command: |
-            sudo apt-get update
-            sudo apt-get install -y python3-pip python3-dev
-            python3 -m venv venv 
-            . venv/bin/activate
-            pip install -r requirements.txt
+      - attach_workspace:
+          at: /workspace
 
       - run:
           name: Start Django server
           command: |
+            cd /workspace
             . venv/bin/activate
             cd trade_data_catalogue
             python manage.py runserver
@@ -59,12 +71,6 @@ jobs:
             until curl -s http://localhost:8000; do sleep 1; done
 
       - run:
-          name: Install npm and Cypress
-          command: |
-            npm install
-            npm install cypress
-
-      - run:
           name: Run Cypress tests
           command: |
             npx cypress run
@@ -73,5 +79,10 @@ workflows:
   version: 2
   test:
     jobs:
+      - environment_setup
       - run_django_tests
+          requires:
+            - environment_setup
       - run_cypress_tests
+          requires:
+            - environment_setup
