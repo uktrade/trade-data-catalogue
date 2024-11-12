@@ -13,7 +13,12 @@
   {% for dataset_id, dataset in datasets.items %}
   <div class="dataset govuk-!-padding-top-3" data-testid="dataset">
     <h3 class="govuk-heading-m">
-      <a class="govuk-link" id="{{dataset_id}}">{{dataset.title}}</a><br />
+      <a
+        class="govuk-link"
+        id="{{dataset_id}}"
+        href="{% url 'dataset_detail_view' dataset_id %}"
+        >{{dataset.title}}</a
+      ><br />
     </h3>
     <div class="govuk-grid-row versions">
       <div class="govuk-grid-column-one-half" data-testid="dataset-versions">
