@@ -2,9 +2,9 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from trade_data_catalogue.utils import BASE_API_URL
-from trade_data_catalogue.utils import fetch_json_data_from_api
+from trade_data_catalogue.utils import fetch_data_from_api
 
-from .models import Dataset
+from .models import Dataset, DatasetDetails
 
 
 class DatasetCatalogueView(TemplateView):
@@ -30,25 +30,36 @@ class DatasetCatalogueView(TemplateView):
 
         return datasets
 
-    def get(self, request):
-        json_data = fetch_json_data_from_api(self.fetch_url)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        json_data = fetch_data_from_api(self.fetch_url)
         dataset_ids = self.get_dataset_ids(json_data)
         datasets = self.get_dataset_objects(dataset_ids)
 
-        dataset_count = len(datasets)
+        context["datasets"] = datasets
+        context["dataset_count"] = len(datasets)
 
-        return render(
-            request,
-            self.template_name,
-            {"datasets": datasets, "dataset_count": dataset_count},
-        )
+        return context
+
 
 class DatasetDetailView(TemplateView):
     template_name = "dataset_catalogue/details.html"
-    
-    def get(self, request, dataset_id):
-        return render(
-            request,
-            self.template_name,
-            {"dataset_id": dataset_id}
-        )
+
+    def get_dataset_details_object(self, dataset_id, version):
+        dataset_details = DatasetDetails(dataset_id, version)
+        dataset_details.set_formatted_dataset_title()
+        dataset_details.set_dataset_metadata()
+        if dataset_details.metadata != None:
+            dataset_details.set_description()
+
+        return dataset_details
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        dataset = self.get_dataset_details_object(**kwargs)
+
+        context["dataset"] = dataset
+
+        return context

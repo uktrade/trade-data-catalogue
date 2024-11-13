@@ -1,5 +1,5 @@
 from trade_data_catalogue.utils import BASE_API_URL
-from trade_data_catalogue.utils import fetch_json_data_from_api
+from trade_data_catalogue.utils import fetch_data_from_api
 
 
 class Dataset:
@@ -16,7 +16,7 @@ class Dataset:
         self.title = self.get_formatted_dataset_title(self.id)
 
     def get_dataset_versions(self, url):
-        json_data = fetch_json_data_from_api(url)
+        json_data = fetch_data_from_api(url)
         dataset_version_ids = json_data["versions"]
         dataset_versions = [version["id"] for version in dataset_version_ids]
         return dataset_versions
@@ -45,3 +45,24 @@ class Dataset:
 
     def set_latest_version(self):
         self.latest_version = self.get_latest_version(self.versions)
+
+
+class DatasetDetails(Dataset):
+    def __init__(self, id, version):
+        super().__init__(id)
+        self.version = version
+
+    def get_dataset_metadata(self, url):
+        csvw_data = fetch_data_from_api(url)
+        if csvw_data is None:
+            return None
+        return csvw_data
+
+    def set_dataset_metadata(self):
+        self.metadata = self.get_dataset_metadata(
+            f"{self.url}/versions/{self.version}/metadata?format=csvw"
+        )
+
+    def set_description(self):
+        if "dit:databases" in self.metadata:
+            self.description = self.metadata["dit:databases"][0]["dc:title"]
