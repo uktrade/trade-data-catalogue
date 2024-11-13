@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import TemplateView
 
 from trade_data_catalogue.utils import BASE_API_URL
-from trade_data_catalogue.utils import fetch_json_data_from_api
+from trade_data_catalogue.utils import fetch_data_from_api
 
 from .models import Dataset, DatasetDetails
 
@@ -33,7 +33,7 @@ class DatasetCatalogueView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        json_data = fetch_json_data_from_api(self.fetch_url)
+        json_data = fetch_data_from_api(self.fetch_url)
         dataset_ids = self.get_dataset_ids(json_data)
         datasets = self.get_dataset_objects(dataset_ids)
 

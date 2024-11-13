@@ -1,5 +1,5 @@
 from unittest.mock import patch, MagicMock
-from django.test import TestCase, RequestFactory
+from django.test import TestCase
 from django.urls import reverse
 
 from dataset_catalogue.views import DatasetCatalogueView
@@ -20,7 +20,7 @@ class TestDatasetCatalogueView(TestCase):
 
         self.assertEqual(result, expected_value)
 
-    @patch("dataset_catalogue.models.fetch_json_data_from_api")
+    @patch("dataset_catalogue.models.fetch_data_from_api")
     @patch("dataset_catalogue.views.Dataset")
     def test_get_dataset_objects(self, MockDataset, mock_fetch_dataset_api_data):
         mock_fetch_dataset_api_data.return_value = {
