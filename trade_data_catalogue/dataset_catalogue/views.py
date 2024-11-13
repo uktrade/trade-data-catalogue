@@ -50,7 +50,8 @@ class DatasetDetailView(TemplateView):
         dataset_details = DatasetDetails(dataset_id, version)
         dataset_details.set_formatted_dataset_title()
         dataset_details.set_dataset_metadata()
-        dataset_details.set_description()
+        if dataset_details.metadata != None:
+            dataset_details.set_description()
 
         return dataset_details
 

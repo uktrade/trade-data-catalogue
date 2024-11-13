@@ -53,13 +53,12 @@ class DatasetDetails(Dataset):
         self.version = version
 
     def get_dataset_metadata(self, url):
-        json_data = fetch_data_from_api(url)
-        if json_data is None:
+        csvw_data = fetch_data_from_api(url)
+        if csvw_data is None:
             return None
-        return json_data
+        return csvw_data
 
     def set_dataset_metadata(self):
-
         self.metadata = self.get_dataset_metadata(
             f"{self.url}/versions/{self.version}/metadata?format=csvw"
         )
