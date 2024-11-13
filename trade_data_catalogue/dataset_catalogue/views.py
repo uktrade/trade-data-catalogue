@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
 
-from .models import Dataset, DatasetDetails
+from .models import Dataset, DatasetDetails, DatasetTable
 
 
 class DatasetCatalogueView(TemplateView):
@@ -52,6 +52,13 @@ class DatasetDetailView(TemplateView):
         dataset_details.set_dataset_metadata()
         if dataset_details.metadata != None:
             dataset_details.set_description()
+            dataset_details.set_dataset_tables_metadata()
+            if dataset_details.dataset_tables_metadata != None:
+                dataset_tables = []
+                for table_metadata in dataset_details.dataset_tables_metadata:
+                    this_dataset_table = DatasetTable(table_metadata["dc:title"])
+                    dataset_tables.append(this_dataset_table)
+                dataset_details.set_dataset_tables(dataset_tables)
 
         return dataset_details
 

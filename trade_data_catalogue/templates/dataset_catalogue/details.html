@@ -4,5 +4,8 @@
   <p>{{dataset.version}}</p>
   {% if dataset.description %}
   <p>{{dataset.description}}</p>
+  {% for table in dataset.tables %}
+  <p>{{table.title}}</p>
+  {% endfor %}
 </div>
 {% endif %} {% endblock content %}

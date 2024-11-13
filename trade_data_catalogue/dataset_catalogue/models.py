@@ -66,3 +66,17 @@ class DatasetDetails(Dataset):
     def set_description(self):
         if "dit:databases" in self.metadata:
             self.description = self.metadata["dit:databases"][0]["dc:title"]
+
+    def set_dataset_tables_metadata(self):
+        if "tables" in self.metadata:
+            self.dataset_tables_metadata = self.metadata["tables"]
+        else: 
+            self.dataset_tables_metadata = None
+    
+    def set_dataset_tables(self, tables):
+        self.tables = tables
+
+class DatasetTable:
+    def __init__(self, title):
+        self.title = title
+    
