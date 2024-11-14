@@ -98,7 +98,10 @@ class DatasetDetails(Dataset):
 
     def set_dataset_reports(self, reports):
         self.reports = reports
-
+    
+    def set_dataset_versions(self):
+        versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
+        self.versions = versions[0:20]
 
 class DatasetTable:
     def __init__(self, id):

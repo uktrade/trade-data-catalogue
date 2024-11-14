@@ -13,5 +13,9 @@
   {% for report in dataset.reports %}
   <p>{{report.id}}</p>
   {% endfor %} {% endif %}
+  <p>Versions</p>
+  {% for version in dataset.versions %}
+  <p>{{version}}</p>
+  {% endfor %}
 </div>
 {% endblock content %}
