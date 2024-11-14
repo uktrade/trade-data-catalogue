@@ -47,22 +47,24 @@ class DatasetDetailView(TemplateView):
     template_name = "dataset_catalogue/details.html"
 
     def get_dataset_details_object(self, dataset_id, version):
-        dataset_details = self.initialize_dataset_details_metadata(dataset_id, version)
-        if dataset_details.metadata != None:
-            self.process_dataset_tables_metadata(dataset_details)
-
-        return dataset_details
-
-    def initialize_dataset_details_metadata(self, dataset_id, version):
         dataset_details = DatasetDetails(dataset_id, version)
         dataset_details.set_formatted_dataset_title()
+        dataset_details_with_metadata = self.initialize_dataset_details_metadata(
+            dataset_details
+        )
+        if dataset_details_with_metadata.metadata != None:
+            self.process_dataset_tables_metadata(dataset_details_with_metadata)
+
+        return dataset_details_with_metadata
+
+    def initialize_dataset_details_metadata(self, dataset_details):
         dataset_details.set_dataset_metadata()
         if dataset_details.metadata != None:
             dataset_details.set_description()
             dataset_details.set_dataset_tables_metadata()
 
         return dataset_details
-    
+
     def process_dataset_tables_metadata(self, dataset_details):
         if dataset_details.dataset_tables_metadata != None:
             dataset_tables = []
