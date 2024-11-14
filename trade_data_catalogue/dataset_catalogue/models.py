@@ -64,8 +64,8 @@ class DatasetDetails(Dataset):
         )
 
     def set_description(self):
-        if "dit:databases" in self.metadata:
-            self.description = self.metadata["dit:databases"][0]["dc:title"]
+        if "dc:description" in self.metadata:
+            self.description = self.metadata["dc:description"]
 
     def get_dataset_table_ids(self, url):
         json_data = fetch_data_from_api(url)
