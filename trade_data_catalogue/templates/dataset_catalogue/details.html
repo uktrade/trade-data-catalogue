@@ -4,8 +4,14 @@
   <p>{{dataset.version}}</p>
   {% if dataset.description %}
   <p>{{dataset.description}}</p>
+  {% endif %} {% if dataset.tables %}
+  <p>Tables</p>
   {% for table in dataset.tables %}
-  <p>{{table.title}}</p>
-  {% endfor %}
+  <p>{{table.id}}</p>
+  {% endfor %} {% endif %} {% if dataset.reports %}
+  <p>Reports</p>
+  {% for report in dataset.reports %}
+  <p>{{report.id}}</p>
+  {% endfor %} {% endif %}
 </div>
-{% endif %} {% endblock content %}
+{% endblock content %}

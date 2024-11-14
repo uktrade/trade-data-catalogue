@@ -64,19 +64,47 @@ class DatasetDetails(Dataset):
         )
 
     def set_description(self):
-        if "dit:databases" in self.metadata:
-            self.description = self.metadata["dit:databases"][0]["dc:title"]
+        if "dc:description" in self.metadata:
+            self.description = self.metadata["dc:description"]
 
-    def set_dataset_tables_metadata(self):
-        if "tables" in self.metadata:
-            self.dataset_tables_metadata = self.metadata["tables"]
-        else: 
-            self.dataset_tables_metadata = None
-    
+    def get_dataset_table_ids(self, url):
+        json_data = fetch_data_from_api(url)
+        if "tables" in json_data:
+            table_ids = json_data["tables"]
+            dataset_table_ids = [table["id"] for table in table_ids]
+            return dataset_table_ids
+        return None
+
+    def set_dataset_table_ids(self):
+        self.table_ids = self.get_dataset_table_ids(
+            f"{self.url}/versions/{self.version}/tables?format=json"
+        )
+
     def set_dataset_tables(self, tables):
         self.tables = tables
 
+    def get_dataset_report_ids(self, url):
+        json_data = fetch_data_from_api(url)
+        if "reports" in json_data:
+            report_ids = json_data["reports"]
+            dataset_report_ids = [report["id"] for report in report_ids]
+            return dataset_report_ids
+        return None
+
+    def set_dataset_report_ids(self):
+        self.report_ids = self.get_dataset_report_ids(
+            f"{self.url}/versions/{self.version}/reports?format=json"
+        )
+
+    def set_dataset_reports(self, reports):
+        self.reports = reports
+
+
 class DatasetTable:
-    def __init__(self, title):
-        self.title = title
-    
+    def __init__(self, id):
+        self.id = id
+
+
+class DatasetReport:
+    def __init__(self, id):
+        self.id = id

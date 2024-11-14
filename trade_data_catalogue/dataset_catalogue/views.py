@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
 
-from .models import Dataset, DatasetDetails, DatasetTable
+from .models import Dataset, DatasetDetails, DatasetTable, DatasetReport
 
 
 class DatasetCatalogueView(TemplateView):
@@ -47,29 +47,40 @@ class DatasetDetailView(TemplateView):
     template_name = "dataset_catalogue/details.html"
 
     def get_dataset_details_object(self, dataset_id, version):
-        dataset_details = self.initialize_dataset_details_metadata(dataset_id, version)
-        if dataset_details.metadata != None:
-            self.process_dataset_tables_metadata(dataset_details)
+        dataset_details = DatasetDetails(dataset_id, version)
+        dataset_details.set_formatted_dataset_title()
+        dataset_details = self.initialise_dataset_details_metadata(dataset_details)
+        dataset_details.set_dataset_table_ids()
+        dataset_details.set_dataset_report_ids()
+        if dataset_details.table_ids != None:
+            dataset_details = self.get_dataset_table_objects(dataset_details)
+        if dataset_details.report_ids != None:
+            dataset_details = self.get_dataset_report_objects(dataset_details)
 
         return dataset_details
 
-    def initialize_dataset_details_metadata(self, dataset_id, version):
-        dataset_details = DatasetDetails(dataset_id, version)
-        dataset_details.set_formatted_dataset_title()
+    def initialise_dataset_details_metadata(self, dataset_details):
         dataset_details.set_dataset_metadata()
         if dataset_details.metadata != None:
             dataset_details.set_description()
-            dataset_details.set_dataset_tables_metadata()
 
         return dataset_details
-    
-    def process_dataset_tables_metadata(self, dataset_details):
-        if dataset_details.dataset_tables_metadata != None:
-            dataset_tables = []
-            for table_metadata in dataset_details.dataset_tables_metadata:
-                this_dataset_table = DatasetTable(table_metadata["dc:title"])
-                dataset_tables.append(this_dataset_table)
-            dataset_details.set_dataset_tables(dataset_tables)
+
+    def get_dataset_table_objects(self, dataset_details):
+        dataset_tables = []
+        for table_id in dataset_details.table_ids:
+            this_dataset_table = DatasetTable(table_id)
+            dataset_tables.append(this_dataset_table)
+        dataset_details.set_dataset_tables(dataset_tables)
+
+        return dataset_details
+
+    def get_dataset_report_objects(self, dataset_details):
+        dataset_reports = []
+        for report_id in dataset_details.report_ids:
+            this_dataset_report = DatasetReport(report_id)
+            dataset_reports.append(this_dataset_report)
+        dataset_details.set_dataset_reports(dataset_reports)
 
         return dataset_details
 
