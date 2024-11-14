@@ -4,10 +4,11 @@
     <h1 class="govuk-heading-l" data-testid="dataset-details-header">
       {{dataset.title}}
     </h1>
+    <p class="govuk-body">{{dataset.version}}</p>
   </div>
-  <p>{{dataset.version}}</p>
   {% if dataset.description %}
-  <p>{{dataset.description}}</p>
+  <h2 class="govuk-heading-m">Description</h2>
+  <p class="govuk-body">{{dataset.description}}</p>
   {% endif %} {% if dataset.tables %}
   <p>Tables</p>
   {% for table in dataset.tables %}
