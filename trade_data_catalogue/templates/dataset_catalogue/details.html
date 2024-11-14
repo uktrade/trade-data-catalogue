@@ -1,6 +1,10 @@
 {% extends "base.html" %} {% block content %}
 <div class="govuk-width-container">
-  <p>{{dataset.title}}</p>
+  <div data-testid="dataset-details-header-container">
+    <h1 class="govuk-heading-l" data-testid="dataset-details-header">
+      {{dataset.title}}
+    </h1>
+  </div>
   <p>{{dataset.version}}</p>
   {% if dataset.description %}
   <p>{{dataset.description}}</p>
