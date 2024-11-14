@@ -56,7 +56,8 @@ class DatasetDetailView(TemplateView):
             dataset_details = self.get_dataset_table_objects(dataset_details)
         if dataset_details.report_ids != None:
             dataset_details = self.get_dataset_report_objects(dataset_details)
-
+        dataset_details.set_dataset_versions()
+        
         return dataset_details
 
     def initialise_dataset_details_metadata(self, dataset_details):

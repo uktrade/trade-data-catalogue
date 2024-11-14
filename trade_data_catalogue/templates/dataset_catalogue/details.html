@@ -13,5 +13,13 @@
   {% for report in dataset.reports %}
   <p>{{report.id}}</p>
   {% endfor %} {% endif %}
+  <p>Versions</p>
+  {% for version in dataset.versions %}
+  <a
+    class="govuk-link"
+    href="{% url 'dataset_detail_view' dataset_id=dataset.id version=version %}"
+    >{{version}}</a
+  >
+  {% endfor %}
 </div>
 {% endblock content %}
