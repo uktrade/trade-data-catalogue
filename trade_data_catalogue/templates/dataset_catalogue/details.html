@@ -26,28 +26,18 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Case manager</th>
-            <th scope="col" class="govuk-table__header">Cases opened</th>
-            <th scope="col" class="govuk-table__header">Cases closed</th>
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Rows</th>
           </tr>
         </thead>
+        {% if dataset.tables %} {% for table in dataset.tables %}
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">David Francis</td>
+            <td class="govuk-table__cell">{{table.id}}</td>
             <td class="govuk-table__cell">3</td>
-            <td class="govuk-table__cell">0</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Paul Farmer</td>
-            <td class="govuk-table__cell">1</td>
-            <td class="govuk-table__cell">0</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Rita Patel</td>
-            <td class="govuk-table__cell">2</td>
-            <td class="govuk-table__cell">0</td>
           </tr>
         </tbody>
+        {% endfor %} {% endif %}
       </table>
     </div>
     <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="reports">
@@ -55,40 +45,21 @@
       <table class="govuk-table">
         <thead class="govuk-table__head">
           <tr class="govuk-table__row">
-            <th scope="col" class="govuk-table__header">Case manager</th>
-            <th scope="col" class="govuk-table__header">Cases opened</th>
-            <th scope="col" class="govuk-table__header">Cases closed</th>
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Rows</th>
           </tr>
         </thead>
+        {% if dataset.reports %} {% for report in dataset.reports %}
         <tbody class="govuk-table__body">
           <tr class="govuk-table__row">
-            <td class="govuk-table__cell">David Francis</td>
+            <td class="govuk-table__cell">{{report.id}}</td>
             <td class="govuk-table__cell">24</td>
-            <td class="govuk-table__cell">18</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Paul Farmer</td>
-            <td class="govuk-table__cell">16</td>
-            <td class="govuk-table__cell">20</td>
-          </tr>
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell">Rita Patel</td>
-            <td class="govuk-table__cell">24</td>
-            <td class="govuk-table__cell">27</td>
           </tr>
         </tbody>
+        {% endfor %} {% endif %}
       </table>
     </div>
   </div>
-  {% if dataset.tables %}
-  <p>Tables</p>
-  {% for table in dataset.tables %}
-  <p>{{table.id}}</p>
-  {% endfor %} {% endif %} {% if dataset.reports %}
-  <p>Reports</p>
-  {% for report in dataset.reports %}
-  <p>{{report.id}}</p>
-  {% endfor %} {% endif %}
   <p>Versions</p>
   {% for version in dataset.versions %}
   <a
