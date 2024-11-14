@@ -14,12 +14,15 @@
   <div class="govuk-tabs" data-module="govuk-tabs">
     <h2 class="govuk-tabs__title">Contents</h2>
     <ul class="govuk-tabs__list">
+      {% if dataset.tables %}
       <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
         <a class="govuk-tabs__tab" href="#tables"> Tables </a>
       </li>
+      {% endif %} {% if dataset.reports %}
       <li class="govuk-tabs__list-item">
         <a class="govuk-tabs__tab" href="#reports"> Reports </a>
       </li>
+      {% endif %}
     </ul>
     <div class="govuk-tabs__panel" id="tables">
       <h2 class="govuk-heading-l">Tables</h2>
