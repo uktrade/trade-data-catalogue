@@ -38,27 +38,36 @@
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">Name</th>
-              <th scope="col" class="govuk-table__header">Rows</th>
+              <th
+                scope="col"
+                class="govuk-table__header govuk-!-text-align-right"
+              >
+                Rows
+              </th>
             </tr>
           </thead>
-          {% if dataset.tables %} {% for table in tables_page %}
+          {% if dataset.tables %}
           <tbody class="govuk-table__body">
+            {% for table in tables_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
                 <a class="govuk-link">{{table.id}}</a>
               </td>
-              <td class="govuk-table__cell">3</td>
+              <td class="govuk-table__cell govuk-!-text-align-right">3</td>
             </tr>
+            {% endfor %}
           </tbody>
-          {% endfor %} {% endif %}
+          {% endif %}
         </table>
 
         <div
           class="{% if tables_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
         >
           <nav class="govuk-pagination" aria-label="Pagination">
-            {% if tables_page.has_previous %}
-            <div class="govuk-pagination__prev">
+            <div
+              class="{% if tables_page.has_previous %}govuk-pagination__prev {% endif %}"
+            >
+              {% if tables_page.has_previous %}
               <a
                 class="govuk-link govuk-pagination__link"
                 href="?tables_page={{tables_page.previous_page_number}}"
@@ -81,8 +90,9 @@
                   Previous<span class="govuk-visually-hidden"> page</span>
                 </span>
               </a>
+              {% endif %}
             </div>
-            {% endif %}
+
             <ul class="govuk-pagination__list">
               {% for page in tables_page.paginator.page_range %}
               <li
@@ -99,8 +109,10 @@
               {% endfor %}
             </ul>
 
-            {% if tables_page.has_next %}
-            <div class="govuk-pagination__next">
+            <div
+              class="{% if tables_page.has_next %}govuk-pagination__next{% endif %}"
+            >
+              {% if tables_page.has_next %}
               <a
                 class="govuk-link govuk-pagination__link"
                 href="?tables_page={{tables_page.next_page_number}}"
@@ -123,8 +135,8 @@
                   ></path>
                 </svg>
               </a>
+              {% endif %}
             </div>
-            {% endif %}
           </nav>
         </div>
       </div>
@@ -135,26 +147,36 @@
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">Name</th>
-              <th scope="col" class="govuk-table__header">Rows</th>
+              <th
+                scope="col"
+                class="govuk-table__header govuk-!-text-align-right"
+              >
+                Rows
+              </th>
             </tr>
           </thead>
-          {% if dataset.reports %} {% for report in reports_page %}
+          {% if dataset.reports %}
           <tbody class="govuk-table__body">
+            {% for report in reports_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
                 <a class="govuk-link">{{report.id}}</a>
               </td>
-              <td class="govuk-table__cell">24</td>
+              <td class="govuk-table__cell govuk-!-text-align-right">24</td>
             </tr>
+            {% endfor %}
           </tbody>
-          {% endfor %} {% endif %}
+          {% endif %}
         </table>
+
         <div
           class="{% if reports_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
         >
-          <nav class="govuk-pagination" aria-label="Pagination">
-            {% if reports_page.has_previous %}
-            <div class="govuk-pagination__prev">
+          <nav class="govuk-pagination govuk-grid-row" aria-label="Pagination">
+            <div
+              class="{% if reports_page.has_previous %}govuk-pagination__prev{% endif %}"
+            >
+              {% if reports_page.has_previous %}
               <a
                 class="govuk-link govuk-pagination__link"
                 href="?reports_page={{reports_page.previous_page_number}}"
@@ -176,9 +198,10 @@
                 <span class="govuk-pagination__link-title">
                   Previous<span class="govuk-visually-hidden"> page</span>
                 </span>
+                {% endif %}
               </a>
             </div>
-            {% endif %}
+
             <ul class="govuk-pagination__list">
               {% for page in reports_page.paginator.page_range %}
               <li
@@ -195,8 +218,11 @@
               {% endfor %}
             </ul>
 
-            {% if reports_page.has_next %}
-            <div class="govuk-pagination__next">
+            <div
+              class="class"
+              ="{% if reports_page.has_next %}govuk-pagination__next{% endif %}"
+            >
+              {% if reports_page.has_next %}
               <a
                 class="govuk-link govuk-pagination__link"
                 href="?reports_page={{reports_page.next_page_number}}"
@@ -219,8 +245,8 @@
                   ></path>
                 </svg>
               </a>
+              {% endif %}
             </div>
-            {% endif %}
           </nav>
         </div>
       </div>
