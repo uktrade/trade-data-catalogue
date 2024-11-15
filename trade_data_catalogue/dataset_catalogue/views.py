@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.core.paginator import Paginator
 
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
@@ -92,7 +92,14 @@ class DatasetDetailView(TemplateView):
         context = super().get_context_data(**kwargs)
 
         dataset = self.get_dataset_details_object(**kwargs)
-
         context["dataset"] = dataset
+
+        if hasattr(dataset, "tables"):
+            tables_paginator = Paginator(dataset.tables, 5)
+            context["tables_pages"] = tables_paginator
+        
+        if hasattr(dataset, "reports"):
+            reports_paginator = Paginator(dataset.reports, 5)
+            context["reports_pages"] = reports_paginator
 
         return context
