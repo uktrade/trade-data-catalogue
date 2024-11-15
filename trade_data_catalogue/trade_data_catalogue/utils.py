@@ -1,4 +1,4 @@
-import requests
+import requests, re
 
 
 BASE_API_URL = "https://data.api.trade.gov.uk"
@@ -11,3 +11,7 @@ def fetch_data_from_api(url):
         return response.json()
     else:
         return {"error": "Failed to fetch data"}
+
+
+def get_transformed_string_from_pattern(string, pattern):
+    return re.sub(pattern, lambda match: match.group(0).upper(), string)
