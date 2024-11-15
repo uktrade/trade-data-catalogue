@@ -41,7 +41,7 @@
               <th scope="col" class="govuk-table__header">Rows</th>
             </tr>
           </thead>
-          {% if dataset.tables %} {% for table in tables_pages %}
+          {% if dataset.tables %} {% for table in tables_page %}
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
@@ -52,11 +52,15 @@
           </tbody>
           {% endfor %} {% endif %}
         </table>
-        <div>
+        <div class="govuk-grid-row">
           <nav class="govuk-pagination" aria-label="Pagination">
-            {% if tables_pages.has_previous %}
+            {% if tables_page.has_previous %}
             <div class="govuk-pagination__prev">
-              <a class="govuk-link govuk-pagination__link" href="#" rel="prev">
+              <a
+                class="govuk-link govuk-pagination__link"
+                href="?tables_page={{tables_page.previous_page_number}}"
+                rel="prev"
+              >
                 <svg
                   class="govuk-pagination__icon govuk-pagination__icon--prev"
                   xmlns="http://www.w3.org/2000/svg"
@@ -76,13 +80,14 @@
               </a>
             </div>
             {% endif %}
-
             <ul class="govuk-pagination__list">
-              {% for page in tables_pages.paginator.page_range %}
-              <li class="govuk-pagination__item">
+              {% for page in tables_page.paginator.page_range %}
+              <li
+                class="govuk-pagination__item {% if tables_page.number == page %} govuk-pagination__item--current {% endif %}"
+              >
                 <a
                   class="govuk-link govuk-pagination__link"
-                  href="#"
+                  href="?tables_page={{page}}"
                   aria-label="Page {{page}}"
                 >
                   {{page}}
@@ -91,9 +96,13 @@
               {% endfor %}
             </ul>
 
-            {% if tables_pages.has_next %}
+            {% if tables_page.has_next %}
             <div class="govuk-pagination__next">
-              <a class="govuk-link govuk-pagination__link" href="#" rel="next">
+              <a
+                class="govuk-link govuk-pagination__link"
+                href="?tables_page={{tables_page.next_page_number}}"
+                rel="next"
+              >
                 <span class="govuk-pagination__link-title">
                   Next<span class="govuk-visually-hidden"> page</span>
                 </span>
@@ -125,7 +134,7 @@
               <th scope="col" class="govuk-table__header">Rows</th>
             </tr>
           </thead>
-          {% if dataset.reports %} {% for report in reports_pages %}
+          {% if dataset.reports %} {% for report in reports_page %}
           <tbody class="govuk-table__body">
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">

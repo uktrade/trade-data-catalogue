@@ -87,6 +87,7 @@ class DatasetDetailView(TemplateView):
         dataset_details.set_dataset_reports(dataset_reports)
 
         return dataset_details
+    
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -96,10 +97,14 @@ class DatasetDetailView(TemplateView):
 
         if hasattr(dataset, "tables"):
             tables_paginator = Paginator(dataset.tables, 5)
-            context["tables_pages"] = tables_paginator
+            tables_page_number = self.request.GET.get("tables_page")
+            tables_page = tables_paginator.get_page(tables_page_number)
+            context["tables_page"] = tables_page
 
-        if hasattr(dataset, "reports"):
-            reports_paginator = Paginator(dataset.reports, 5)
-            context["reports_pages"] = reports_paginator
+        # if hasattr(dataset, "reports"):
+        #     reports_paginator = Paginator(dataset.reports, 5)
+        #     reports_page_number = request.GET.get("reports_page")
+        #     reports_page = reports_paginator.get_page(reports_page_number)
+        #     context["reports_page"] = reports_page
 
         return context
