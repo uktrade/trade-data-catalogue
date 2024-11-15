@@ -52,12 +52,15 @@ class DatasetDetailView(TemplateView):
         dataset_details = self.initialise_dataset_details_metadata(dataset_details)
         dataset_details.set_dataset_table_ids()
         dataset_details.set_dataset_report_ids()
+
         if dataset_details.table_ids != None:
             dataset_details = self.get_dataset_table_objects(dataset_details)
         if dataset_details.report_ids != None:
             dataset_details = self.get_dataset_report_objects(dataset_details)
+
         dataset_details.set_dataset_versions()
-        
+        dataset_details.set_latest_version()
+
         return dataset_details
 
     def initialise_dataset_details_metadata(self, dataset_details):

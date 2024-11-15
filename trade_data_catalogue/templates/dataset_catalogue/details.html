@@ -1,25 +1,102 @@
 {% extends "base.html" %} {% block content %}
 <div class="govuk-width-container">
-  <p>{{dataset.title}}</p>
-  <p>{{dataset.version}}</p>
+  <div class="" data-testid="dataset-details-header-container">
+    <h1
+      class="govuk-heading-l govuk-!-static-margin-bottom-2"
+      data-testid="dataset-details-header"
+    >
+      {{dataset.title}}
+    </h1>
+    <p class="govuk-body">{{dataset.version}}</p>
+  </div>
+
   {% if dataset.description %}
-  <p>{{dataset.description}}</p>
-  {% endif %} {% if dataset.tables %}
-  <p>Tables</p>
-  {% for table in dataset.tables %}
-  <p>{{table.id}}</p>
-  {% endfor %} {% endif %} {% if dataset.reports %}
-  <p>Reports</p>
-  {% for report in dataset.reports %}
-  <p>{{report.id}}</p>
-  {% endfor %} {% endif %}
-  <p>Versions</p>
-  {% for version in dataset.versions %}
-  <a
-    class="govuk-link"
-    href="{% url 'dataset_detail_view' dataset_id=dataset.id version=version %}"
-    >{{version}}</a
-  >
-  {% endfor %}
+  <div class="govuk-!-static-padding-top-5">
+    <h2 class="govuk-heading-m">Description</h2>
+    <p class="govuk-body">{{dataset.description}}</p>
+  </div>
+  {% endif %}
+
+  <div class="govuk-!-static-padding-top-3">
+    <h2 class="govuk-heading-m">Data</h2>
+    <div class="govuk-tabs" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">Contents</h2>
+      <ul class="govuk-tabs__list">
+        {% if dataset.tables %}
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#tables"> Tables </a>
+        </li>
+        {% endif %} {% if dataset.reports %}
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#reports"> Reports </a>
+        </li>
+        {% endif %}
+      </ul>
+      <div class="govuk-tabs__panel" id="tables">
+        <h2 class="govuk-heading-l">Tables</h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Rows</th>
+            </tr>
+          </thead>
+          {% if dataset.tables %} {% for table in dataset.tables %}
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <a class="govuk-link">{{table.id}}</a>
+              </td>
+              <td class="govuk-table__cell">3</td>
+            </tr>
+          </tbody>
+          {% endfor %} {% endif %}
+        </table>
+      </div>
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="reports">
+        <h2 class="govuk-heading-l">Reports</h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Rows</th>
+            </tr>
+          </thead>
+          {% if dataset.reports %} {% for report in dataset.reports %}
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <td class="govuk-table__cell">
+                <a class="govuk-link">{{report.id}}</a>
+              </td>
+              <td class="govuk-table__cell">24</td>
+            </tr>
+          </tbody>
+          {% endfor %} {% endif %}
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-!-static-padding-top-3">
+    <h2 class="govuk-heading-m">Versions</h2>
+    <p class="govuk-body">
+      Limited to the previous 20 versions prior to the latest version
+      ({{dataset.latest_version}})
+    </p>
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text"> Previous versions </span>
+      </summary>
+      <div class="govuk-!-static-padding-top-3">
+        {% for version in dataset.versions %}
+        <a
+          class="govuk-link govuk-!-static-padding-right-3"
+          href="{% url 'dataset_detail_view' dataset_id=dataset.id version=version %}"
+          >{{version}}</a
+        >
+        {% endfor %}
+      </div>
+    </details>
+  </div>
 </div>
 {% endblock content %}
