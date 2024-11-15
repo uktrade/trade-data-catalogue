@@ -97,7 +97,7 @@ class DatasetDetailView(TemplateView):
         if hasattr(dataset, "tables"):
             tables_paginator = Paginator(dataset.tables, 5)
             context["tables_pages"] = tables_paginator
-        
+
         if hasattr(dataset, "reports"):
             reports_paginator = Paginator(dataset.reports, 5)
             context["reports_pages"] = reports_paginator
