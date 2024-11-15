@@ -53,7 +53,9 @@
           {% endfor %} {% endif %}
         </table>
 
-        <div>
+        <div
+          class="{% if tables_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
+        >
           <nav class="govuk-pagination" aria-label="Pagination">
             {% if tables_page.has_previous %}
             <div class="govuk-pagination__prev">
@@ -147,7 +149,9 @@
           </tbody>
           {% endfor %} {% endif %}
         </table>
-        <div>
+        <div
+          class="{% if reports_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
+        >
           <nav class="govuk-pagination" aria-label="Pagination">
             {% if reports_page.has_previous %}
             <div class="govuk-pagination__prev">
