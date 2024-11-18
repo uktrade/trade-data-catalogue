@@ -38,20 +38,105 @@
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">Name</th>
-              <th scope="col" class="govuk-table__header">Rows</th>
+              <th
+                scope="col"
+                class="govuk-table__header govuk-!-text-align-right"
+              >
+                Rows
+              </th>
             </tr>
           </thead>
-          {% if dataset.tables %} {% for table in dataset.tables %}
+          {% if dataset.tables %}
           <tbody class="govuk-table__body">
+            {% for table in tables_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
                 <a class="govuk-link">{{table.id}}</a>
               </td>
-              <td class="govuk-table__cell">3</td>
+              <td class="govuk-table__cell govuk-!-text-align-right">3</td>
             </tr>
+            {% endfor %}
           </tbody>
-          {% endfor %} {% endif %}
+          {% endif %}
         </table>
+
+        <div
+          class="{% if tables_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
+        >
+          <nav class="govuk-pagination" aria-label="Pagination">
+            <ul class="govuk-pagination__list">
+              <li
+                class="{% if tables_page.has_previous %}govuk-pagination__prev {% endif %}"
+              >
+                {% if tables_page.has_previous %}
+                <a
+                  class="govuk-link govuk-pagination__link"
+                  href="?tables_page={{tables_page.previous_page_number}}"
+                  rel="prev"
+                >
+                  <svg
+                    class="govuk-pagination__icon govuk-pagination__icon--prev"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="13"
+                    width="15"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 15 13"
+                  >
+                    <path
+                      d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"
+                    ></path>
+                  </svg>
+                  <span class="govuk-pagination__link-title">
+                    Previous<span class="govuk-visually-hidden"> page</span>
+                  </span>
+                </a>
+                {% endif %}
+              </li>
+              {% for page in tables_page.paginator.page_range %}
+              <li
+                class="govuk-pagination__item {% if tables_page.number == page %} govuk-pagination__item--current {% endif %}"
+              >
+                <a
+                  class="govuk-link govuk-pagination__link"
+                  href="?tables_page={{page}}"
+                  aria-label="Page {{page}}"
+                >
+                  {{page}}
+                </a>
+              </li>
+              {% endfor %}
+              <li
+                class="{% if tables_page.has_next %}govuk-pagination__next{% endif %}"
+              >
+                {% if tables_page.has_next %}
+                <a
+                  class="govuk-link govuk-pagination__link"
+                  href="?tables_page={{tables_page.next_page_number}}"
+                  rel="next"
+                >
+                  <span class="govuk-pagination__link-title">
+                    Next<span class="govuk-visually-hidden"> page</span>
+                  </span>
+                  <svg
+                    class="govuk-pagination__icon govuk-pagination__icon--next"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="13"
+                    width="15"
+                    aria-hidden="true"
+                    focusable="false"
+                    viewBox="0 0 15 13"
+                  >
+                    <path
+                      d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                    ></path>
+                  </svg>
+                </a>
+                {% endif %}
+              </li>
+            </ul>
+          </nav>
+        </div>
       </div>
       <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="reports">
         <h2 class="govuk-heading-l">Reports</h2>
@@ -59,20 +144,108 @@
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
               <th scope="col" class="govuk-table__header">Name</th>
-              <th scope="col" class="govuk-table__header">Rows</th>
+              <th
+                scope="col"
+                class="govuk-table__header govuk-!-text-align-right"
+              >
+                Rows
+              </th>
             </tr>
           </thead>
-          {% if dataset.reports %} {% for report in dataset.reports %}
+          {% if dataset.reports %}
           <tbody class="govuk-table__body">
+            {% for report in reports_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
                 <a class="govuk-link">{{report.id}}</a>
               </td>
-              <td class="govuk-table__cell">24</td>
+              <td class="govuk-table__cell govuk-!-text-align-right">24</td>
             </tr>
+            {% endfor %}
           </tbody>
-          {% endfor %} {% endif %}
+          {% endif %}
         </table>
+
+        <div
+          class="{% if reports_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
+        >
+          <nav class="govuk-pagination govuk-grid-row" aria-label="Pagination">
+            <div
+              class="{% if reports_page.has_previous %}govuk-pagination__prev{% endif %}"
+            >
+              {% if reports_page.has_previous %}
+              <a
+                class="govuk-link govuk-pagination__link"
+                href="?reports_page={{reports_page.previous_page_number}}"
+                rel="prev"
+              >
+                <svg
+                  class="govuk-pagination__icon govuk-pagination__icon--prev"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="13"
+                  width="15"
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 15 13"
+                >
+                  <path
+                    d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"
+                  ></path>
+                </svg>
+                <span class="govuk-pagination__link-title">
+                  Previous<span class="govuk-visually-hidden"> page</span>
+                </span>
+                {% endif %}
+              </a>
+            </div>
+
+            <ul class="govuk-pagination__list">
+              {% for page in reports_page.paginator.page_range %}
+              <li
+                class="govuk-pagination__item {% if reports_page.number == page %} govuk-pagination__item--current {% endif %}"
+              >
+                <a
+                  class="govuk-link govuk-pagination__link"
+                  href="?reports_page={{page}}"
+                  aria-label="Page {{page}}"
+                >
+                  {{page}}
+                </a>
+              </li>
+              {% endfor %}
+            </ul>
+
+            <div
+              class="class"
+              ="{% if reports_page.has_next %}govuk-pagination__next{% endif %}"
+            >
+              {% if reports_page.has_next %}
+              <a
+                class="govuk-link govuk-pagination__link"
+                href="?reports_page={{reports_page.next_page_number}}"
+                rel="next"
+              >
+                <span class="govuk-pagination__link-title">
+                  Next<span class="govuk-visually-hidden"> page</span>
+                </span>
+                <svg
+                  class="govuk-pagination__icon govuk-pagination__icon--next"
+                  xmlns="http://www.w3.org/2000/svg"
+                  height="13"
+                  width="15"
+                  aria-hidden="true"
+                  focusable="false"
+                  viewBox="0 0 15 13"
+                >
+                  <path
+                    d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
+                  ></path>
+                </svg>
+              </a>
+              {% endif %}
+            </div>
+          </nav>
+        </div>
       </div>
     </div>
   </div>

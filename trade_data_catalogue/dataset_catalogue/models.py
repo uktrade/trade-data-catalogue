@@ -1,5 +1,8 @@
 from trade_data_catalogue.utils import BASE_API_URL
-from trade_data_catalogue.utils import fetch_data_from_api
+from trade_data_catalogue.utils import (
+    fetch_data_from_api,
+    get_transformed_string_from_pattern,
+)
 
 
 class Dataset:
@@ -10,7 +13,11 @@ class Dataset:
     def get_formatted_dataset_title(self, dataset_id):
         dehyphenated_dataset_id = dataset_id.replace("-", " ")
         title_cased_dataset_id = dehyphenated_dataset_id.title()
-        return title_cased_dataset_id
+        dataset_title_with_correct_region = get_transformed_string_from_pattern(
+            title_cased_dataset_id, r"\b(Uk|Eu)\b"
+        )
+
+        return dataset_title_with_correct_region
 
     def set_formatted_dataset_title(self):
         self.title = self.get_formatted_dataset_title(self.id)
@@ -98,10 +105,11 @@ class DatasetDetails(Dataset):
 
     def set_dataset_reports(self, reports):
         self.reports = reports
-    
+
     def set_dataset_versions(self):
         versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
         self.versions = versions[0:20]
+
 
 class DatasetTable:
     def __init__(self, id):
