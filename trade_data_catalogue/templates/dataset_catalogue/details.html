@@ -61,13 +61,9 @@
         </table>
 
         <div
-          class="{% if tables_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}pagination-container"
+          class="{% if tables_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
         >
-          <nav
-            class="govuk-pagination"
-            style="flex-direction: column; align-items: center"
-            aria-label="Pagination"
-          >
+          <nav class="govuk-pagination" aria-label="Pagination">
             <ul class="govuk-pagination__list">
               <li
                 class="{% if tables_page.has_previous %}govuk-pagination__prev {% endif %}"
