@@ -48,8 +48,10 @@ class Dataset:
         self.version_count_message = self.get_version_count_message(self.versions_count)
 
     def get_latest_version(self, versions):
-        latest_version = versions[0]
-        return latest_version
+        if versions:
+            latest_version = versions[0]
+            return latest_version
+        return None
 
     def set_latest_version(self):
         self.latest_version = self.get_latest_version(self.versions)
