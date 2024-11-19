@@ -127,6 +127,9 @@ class BaseDatasetDataObject:
         )
         return csv_data
 
+    def set_raw_csv_data(self):
+        self.raw_csv_data = self.get_raw_csv_data(self.data_url)
+
     def set_csv_data(self):
         self.csv_headers, self.csv_rows, self.csv_row_count = (
             read_and_parse_raw_csv_data(self.raw_csv_data)
@@ -136,18 +139,10 @@ class BaseDatasetDataObject:
 class DatasetTable(BaseDatasetDataObject):
     def __init__(self, id, dataset):
         super().__init__(id, dataset)
-
-    def set_raw_csv_data(self):
-        self.raw_csv_data = self.get_raw_csv_data(
-            f"{self.dataset.url}/versions/{self.dataset.version}/tables/{self.id}/data?format=csv",
-        )
+        self.data_url = f"{self.dataset.url}/versions/{self.dataset.version}/tables/{self.id}/data?format=csv"
 
 
 class DatasetReport(BaseDatasetDataObject):
     def __init__(self, id, dataset):
         super().__init__(id, dataset)
-
-    def set_raw_csv_data(self):
-        self.raw_csv_data = self.get_raw_csv_data(
-            f"{self.dataset.url}/versions/{self.dataset.version}/reports/{self.id}/data?format=csv"
-        )
+        self.data_url = f"{self.dataset.url}/versions/{self.dataset.version}/reports/{self.id}/data?format=csv"
