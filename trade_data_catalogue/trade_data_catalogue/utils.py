@@ -23,6 +23,8 @@ def read_and_parse_raw_csv_data(response_data):
     row_count = 0
 
     for row in csv_reader:
+        if row_count == 10000:
+            break
         row_count += 1
         rows.append(row)
 
