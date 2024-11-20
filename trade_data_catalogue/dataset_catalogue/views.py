@@ -100,18 +100,20 @@ class DatasetDetailView(TemplateView):
             tables_paginator = Paginator(dataset.tables, 5)
             tables_page_number = self.request.GET.get("tables_page")
             tables_page = tables_paginator.get_page(tables_page_number)
-            # for table in tables_page:
-            #     table.set_raw_csv_data()
-            #     table.set_csv_data()
+            for table in tables_page:
+                table.set_raw_csv_data()
+                table.set_csv_data()
+                table.set_size_messsage()
             context["tables_page"] = tables_page
 
         if hasattr(dataset, "reports"):
             reports_paginator = Paginator(dataset.reports, 5)
             reports_page_number = self.request.GET.get("reports_page")
             reports_page = reports_paginator.get_page(reports_page_number)
-            # for report in reports_page:
-            #     report.set_raw_csv_data()
-            #     report.set_csv_data()
+            for report in reports_page:
+                report.set_raw_csv_data()
+                report.set_csv_data()
+                report.set_size_messsage()
             context["reports_page"] = reports_page
 
         return context
