@@ -11,6 +11,7 @@ class Dataset:
         self.id = id
         self.url = f"{BASE_API_URL}/v1/datasets/{self.id}"
         self.title = self.get_formatted_dataset_title(self.id)
+        self.versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
 
     def get_formatted_dataset_title(self, dataset_id):
         dehyphenated_dataset_id = dataset_id.replace("-", " ")
@@ -26,9 +27,6 @@ class Dataset:
         dataset_version_ids = json_data["versions"]
         dataset_versions = [version["id"] for version in dataset_version_ids]
         return dataset_versions
-
-    def set_dataset_versions(self):
-        self.versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
 
     def get_number_of_dataset_versions(self, versions):
         dataset_version_length = len(versions)
