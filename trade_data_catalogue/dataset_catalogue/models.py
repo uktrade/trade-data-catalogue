@@ -10,6 +10,7 @@ class Dataset:
     def __init__(self, id):
         self.id = id
         self.url = f"{BASE_API_URL}/v1/datasets/{self.id}"
+        self.title = self.get_formatted_dataset_title(self.id)
 
     def get_formatted_dataset_title(self, dataset_id):
         dehyphenated_dataset_id = dataset_id.replace("-", " ")
@@ -19,9 +20,6 @@ class Dataset:
         )
 
         return dataset_title_with_correct_region
-
-    def set_formatted_dataset_title(self):
-        self.title = self.get_formatted_dataset_title(self.id)
 
     def get_dataset_versions(self, url):
         json_data = fetch_data_from_api(url)
