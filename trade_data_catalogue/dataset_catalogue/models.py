@@ -11,7 +11,9 @@ class Dataset:
         self.id = id
         self.url = f"{BASE_API_URL}/v1/datasets/{self.id}"
         self.title = self.get_formatted_dataset_title(self.id)
-        self.versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
+        self.versions = self.get_all_dataset_versions(
+            f"{self.url}/versions?format=json"
+        )
 
         if self.versions:
             self.versions_count = self.get_number_of_dataset_versions(self.versions)
@@ -26,10 +28,9 @@ class Dataset:
         dataset_title_with_correct_region = get_transformed_string_from_pattern(
             title_cased_dataset_id, r"\b(Uk|Eu)\b"
         )
-
         return dataset_title_with_correct_region
 
-    def get_dataset_versions(self, url):
+    def get_all_dataset_versions(self, url):
         json_data = fetch_data_from_api(url)
         dataset_version_ids = json_data["versions"]
         dataset_versions = [version["id"] for version in dataset_version_ids]
