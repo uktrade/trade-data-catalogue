@@ -5,6 +5,7 @@ from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
 
 from .models import Dataset, DatasetDetails, DatasetTable, DatasetReport
+from trade_data_catalogue.base import DatasetVersionBreadcrumbView
 
 
 class DatasetCatalogueView(TemplateView):
@@ -45,7 +46,7 @@ class DatasetCatalogueView(TemplateView):
         return context
 
 
-class DatasetDetailView(TemplateView):
+class DatasetDetailView(DatasetVersionBreadcrumbView):
     template_name = "dataset_catalogue/details.html"
 
     def get_dataset_details_object(self, dataset_id, version):

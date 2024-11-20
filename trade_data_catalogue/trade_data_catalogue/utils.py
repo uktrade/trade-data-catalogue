@@ -34,3 +34,17 @@ def read_and_parse_raw_csv_data(response_data, limit_rows=True):
 
 def get_transformed_string_from_pattern(string, pattern):
     return re.sub(pattern, lambda match: match.group(0).upper(), string)
+
+
+def get_breadcrumbs(path):
+    breadcrumbs = [{ "name": "Dataset Catalogue", "url": "/"}]
+    segments = [segment for segment in path.strip("/").split("/") if segment]
+
+    url = "/"
+    for segment in segments:
+        url += f"{segment}/"
+        breadcrumbs.append({ "name": segment.capitalize(), "url": url})
+    
+    if breadcrumbs:
+        breadcrumbs[-1]["url"] = None
+    return breadcrumbs
