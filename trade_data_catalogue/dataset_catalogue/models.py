@@ -12,6 +12,12 @@ class Dataset:
         self.url = f"{BASE_API_URL}/v1/datasets/{self.id}"
         self.title = self.get_formatted_dataset_title(self.id)
         self.versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
+        if self.versions:
+            self.versions_count = self.get_number_of_dataset_versions(self.versions)
+            self.version_count_message = self.get_version_count_message(
+                self.versions_count
+            )
+            self.latest_version = self.get_latest_version(self.versions)
 
     def get_formatted_dataset_title(self, dataset_id):
         dehyphenated_dataset_id = dataset_id.replace("-", " ")
@@ -32,25 +38,16 @@ class Dataset:
         dataset_version_length = len(versions)
         return dataset_version_length
 
-    def set_number_of_dataset_versions(self):
-        self.versions_count = self.get_number_of_dataset_versions(self.versions)
-
     def get_version_count_message(self, versions_count):
         if versions_count > 1:
             return f"{versions_count} versions"
         return f"{versions_count} version"
-
-    def set_version_count_message(self):
-        self.version_count_message = self.get_version_count_message(self.versions_count)
 
     def get_latest_version(self, versions):
         if versions:
             latest_version = versions[0]
             return latest_version
         return None
-
-    def set_latest_version(self):
-        self.latest_version = self.get_latest_version(self.versions)
 
 
 class DatasetDetails(Dataset):
