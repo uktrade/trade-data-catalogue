@@ -12,6 +12,7 @@ class Dataset:
         self.url = f"{BASE_API_URL}/v1/datasets/{self.id}"
         self.title = self.get_formatted_dataset_title(self.id)
         self.versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
+
         if self.versions:
             self.versions_count = self.get_number_of_dataset_versions(self.versions)
             self.version_count_message = self.get_version_count_message(
