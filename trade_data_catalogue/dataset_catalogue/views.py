@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
 
-from .models import Dataset, DatasetDetails, DatasetTable, DatasetReport
+from .models import Dataset, DatasetDetails
 from trade_data_catalogue.base import DatasetVersionBreadcrumbView
 
 
