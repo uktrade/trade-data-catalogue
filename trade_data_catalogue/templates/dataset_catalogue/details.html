@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block content %}
 <div class="govuk-width-container">
   <nav
-    class="govuk-breadcrumbs govuk-!-static-margin-bottom-5 govuk-!-static-margin-top-0"
+    class="govuk-breadcrumbs govuk-!-static-margin-bottom-8 govuk-!-static-margin-top-0"
     aria-label="Breadcrumb"
   >
     <ol class="govuk-breadcrumbs__list">
@@ -13,11 +13,14 @@
       </li>
       {% endif %} {% endfor %}
       <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link">{{dataset.version}}</a>
+        <a class="govuk-body-s">{{dataset.version}}</a>
       </li>
     </ol>
   </nav>
-  <div class="" data-testid="dataset-details-header-container">
+  <div
+    class="govuk-!-static-margin-bottom-8"
+    data-testid="dataset-details-header-container"
+  >
     <h1
       class="govuk-heading-l govuk-!-static-margin-bottom-2"
       data-testid="dataset-details-header"
