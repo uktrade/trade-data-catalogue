@@ -28,7 +28,7 @@ urlpatterns = [
         name="dataset_catalogue_view",
     ),
     path(
-        "<str:dataset_id>/<str:version>/details",
+        "<str:dataset_id>/<str:version>",
         DatasetDetailView.as_view(),
         name="dataset_detail_view",
     ),
