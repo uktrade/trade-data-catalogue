@@ -135,6 +135,14 @@ class BaseDatasetDataObject:
             read_and_parse_raw_csv_data(self.raw_csv_data)
         )
 
+    def set_size_messsage(self):
+        if self.csv_row_count < 2500:
+            self.size = "Small"
+        elif 2500 <= self.csv_row_count < 10000:
+            self.size = "Medium"
+        elif self.csv_row_count >= 10000:
+            self.size = "Large"
+
 
 class DatasetTable(BaseDatasetDataObject):
     def __init__(self, id, dataset):
