@@ -22,7 +22,6 @@ class DatasetCatalogueView(TemplateView):
         datasets = {}
         for dataset_id in dataset_ids:
             this_dataset = Dataset(dataset_id)
-            this_dataset.set_formatted_dataset_title()
             this_dataset.set_dataset_versions()
             if not this_dataset.versions:
                 continue
