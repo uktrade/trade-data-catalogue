@@ -2,6 +2,7 @@ from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import (
     fetch_data_from_api,
     get_transformed_string_from_pattern,
+    read_and_parse_raw_csv_data,
 )
 
 
@@ -47,8 +48,10 @@ class Dataset:
         self.version_count_message = self.get_version_count_message(self.versions_count)
 
     def get_latest_version(self, versions):
-        latest_version = versions[0]
-        return latest_version
+        if versions:
+            latest_version = versions[0]
+            return latest_version
+        return None
 
     def set_latest_version(self):
         self.latest_version = self.get_latest_version(self.versions)
@@ -111,11 +114,43 @@ class DatasetDetails(Dataset):
         self.versions = versions[0:20]
 
 
-class DatasetTable:
-    def __init__(self, id):
+class BaseDatasetDataObject:
+    def __init__(self, id, dataset):
         self.id = id
+        self.dataset = dataset
+
+    def get_raw_csv_data(self, url):
+        csv_data = fetch_data_from_api(
+            url,
+            False,
+            True,
+        )
+        return csv_data
+
+    def set_raw_csv_data(self):
+        self.raw_csv_data = self.get_raw_csv_data(self.data_url)
+
+    def set_csv_data(self):
+        self.csv_headers, self.csv_rows, self.csv_row_count = (
+            read_and_parse_raw_csv_data(self.raw_csv_data)
+        )
+
+    def set_size_messsage(self):
+        if self.csv_row_count < 2500:
+            self.size = "Small"
+        elif 2500 <= self.csv_row_count < 10000:
+            self.size = "Medium"
+        elif self.csv_row_count >= 10000:
+            self.size = "Large"
 
 
-class DatasetReport:
-    def __init__(self, id):
-        self.id = id
+class DatasetTable(BaseDatasetDataObject):
+    def __init__(self, id, dataset):
+        super().__init__(id, dataset)
+        self.data_url = f"{self.dataset.url}/versions/{self.dataset.version}/tables/{self.id}/data?format=csv"
+
+
+class DatasetReport(BaseDatasetDataObject):
+    def __init__(self, id, dataset):
+        super().__init__(id, dataset)
+        self.data_url = f"{self.dataset.url}/versions/{self.dataset.version}/reports/{self.id}/data?format=csv"

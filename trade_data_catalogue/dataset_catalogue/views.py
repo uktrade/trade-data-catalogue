@@ -23,6 +23,8 @@ class DatasetCatalogueView(TemplateView):
             this_dataset = Dataset(dataset_id)
             this_dataset.set_formatted_dataset_title()
             this_dataset.set_dataset_versions()
+            if not this_dataset.versions:
+                continue
             this_dataset.set_number_of_dataset_versions()
             this_dataset.set_version_count_message()
             this_dataset.set_latest_version()
@@ -73,7 +75,7 @@ class DatasetDetailView(TemplateView):
     def get_dataset_table_objects(self, dataset_details):
         dataset_tables = []
         for table_id in dataset_details.table_ids:
-            this_dataset_table = DatasetTable(table_id)
+            this_dataset_table = DatasetTable(table_id, dataset_details)
             dataset_tables.append(this_dataset_table)
         dataset_details.set_dataset_tables(dataset_tables)
 
@@ -82,7 +84,7 @@ class DatasetDetailView(TemplateView):
     def get_dataset_report_objects(self, dataset_details):
         dataset_reports = []
         for report_id in dataset_details.report_ids:
-            this_dataset_report = DatasetReport(report_id)
+            this_dataset_report = DatasetReport(report_id, dataset_details)
             dataset_reports.append(this_dataset_report)
         dataset_details.set_dataset_reports(dataset_reports)
 
@@ -98,12 +100,20 @@ class DatasetDetailView(TemplateView):
             tables_paginator = Paginator(dataset.tables, 5)
             tables_page_number = self.request.GET.get("tables_page")
             tables_page = tables_paginator.get_page(tables_page_number)
+            for table in tables_page:
+                table.set_raw_csv_data()
+                table.set_csv_data()
+                table.set_size_messsage()
             context["tables_page"] = tables_page
 
         if hasattr(dataset, "reports"):
             reports_paginator = Paginator(dataset.reports, 5)
             reports_page_number = self.request.GET.get("reports_page")
             reports_page = reports_paginator.get_page(reports_page_number)
+            for report in reports_page:
+                report.set_raw_csv_data()
+                report.set_csv_data()
+                report.set_size_messsage()
             context["reports_page"] = reports_page
 
         return context

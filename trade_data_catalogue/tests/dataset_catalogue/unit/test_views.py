@@ -34,6 +34,7 @@ class TestDatasetCatalogueView(TestCase):
         mock_dataset_instance.get_number_of_dataset_versions.return_value = 2
         mock_dataset_instance.get_version_count_message.return_value = "2 versions"
         mock_dataset_instance.get_latest_version.return_value = "v1.1"
+        mock_dataset_instance.versions = ["v1.1", "v1.0"]
 
         MockDataset.return_value = mock_dataset_instance
 

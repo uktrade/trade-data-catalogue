@@ -40,9 +40,15 @@
               <th scope="col" class="govuk-table__header">Name</th>
               <th
                 scope="col"
-                class="govuk-table__header govuk-!-text-align-right"
+                class="govuk-table__header govuk-!-text-align-center"
               >
                 Rows
+              </th>
+              <th
+                scope="col"
+                class="govuk-table__header govuk-!-text-align-right"
+              >
+                Size
               </th>
             </tr>
           </thead>
@@ -53,7 +59,17 @@
               <td class="govuk-table__cell">
                 <a class="govuk-link">{{table.id}}</a>
               </td>
-              <td class="govuk-table__cell govuk-!-text-align-right">3</td>
+              <td class="govuk-table__cell govuk-!-text-align-center">
+                {% if table.csv_row_count == 10000 %} {{table.csv_row_count}}+
+                {% else %} {{table.csv_row_count}} {% endif %}
+              </td>
+              <td class="govuk-table__cell govuk-!-text-align-right">
+                <div
+                  class="govuk-tag {% if table.size == 'Small' %}govuk-tag--green{% elif table.size == 'Medium' %}govuk-tag--yellow{% elif table.size == 'Large' %}govuk-tag--red{% endif %}"
+                >
+                  {{table.size}}
+                </div>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -146,9 +162,15 @@
               <th scope="col" class="govuk-table__header">Name</th>
               <th
                 scope="col"
-                class="govuk-table__header govuk-!-text-align-right"
+                class="govuk-table__header govuk-!-text-align-center"
               >
                 Rows
+              </th>
+              <th
+                scope="col"
+                class="govuk-table__header govuk-!-text-align-right"
+              >
+                Size
               </th>
             </tr>
           </thead>
@@ -159,7 +181,19 @@
               <td class="govuk-table__cell">
                 <a class="govuk-link">{{report.id}}</a>
               </td>
-              <td class="govuk-table__cell govuk-!-text-align-right">24</td>
+              <td class="govuk-table__cell govuk-!-text-align-center">
+                {% if report.csv_row_count == 10000 %} {{report.csv_row_count}}+
+                {% else %} {{report.csv_row_count}} {% endif %}
+              </td>
+              <td
+                class="govuk-table__cell govuk-!-text-align-right {% if report.size == 'Small' %}govuk-tag--green{% endif %}"
+              >
+                <div
+                  class="govuk-tag {% if report.size == 'Small' %}govuk-tag--green{% elif report.size == 'Medium' %}govuk-tag--yellow{% elif report.size == 'Large' %}govuk-tag--red{% endif %}"
+                >
+                  {{report.size}}
+                </div>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
