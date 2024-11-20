@@ -24,9 +24,6 @@ class DatasetCatalogueView(TemplateView):
             this_dataset = Dataset(dataset_id)
             if not this_dataset.versions:
                 continue
-            this_dataset.set_number_of_dataset_versions()
-            this_dataset.set_version_count_message()
-            this_dataset.set_latest_version()
             datasets[dataset_id] = this_dataset
 
         return datasets
