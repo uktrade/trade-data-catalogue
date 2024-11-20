@@ -56,21 +56,32 @@ class DatasetDetails(Dataset):
     def __init__(self, id, version):
         super().__init__(id)
         self.version = version
+        self.metadata = self.get_dataset_metadata(
+            f"{self.url}/versions/{self.version}/metadata?format=csvw"
+        )
+
+        if "dc:description" in self.metadata:
+            self.description = self.metadata["dc:description"]
+
+        self.table_ids = self.get_dataset_table_ids(
+            f"{self.url}/versions/{self.version}/tables?format=json"
+        )
+        self.report_ids = self.get_dataset_report_ids(
+            f"{self.url}/versions/{self.version}/reports?format=json"
+        )
+
+        if self.table_ids:
+            self.tables = self.get_dataset_table_objects()
+        if self.report_ids:
+            self.reports = self.get_dataset_report_objects()
+
+        self.versions = self.versions[0:20]
 
     def get_dataset_metadata(self, url):
         csvw_data = fetch_data_from_api(url)
         if csvw_data is None:
             return None
         return csvw_data
-
-    def set_dataset_metadata(self):
-        self.metadata = self.get_dataset_metadata(
-            f"{self.url}/versions/{self.version}/metadata?format=csvw"
-        )
-
-    def set_description(self):
-        if "dc:description" in self.metadata:
-            self.description = self.metadata["dc:description"]
 
     def get_dataset_table_ids(self, url):
         json_data = fetch_data_from_api(url)
@@ -80,13 +91,12 @@ class DatasetDetails(Dataset):
             return dataset_table_ids
         return None
 
-    def set_dataset_table_ids(self):
-        self.table_ids = self.get_dataset_table_ids(
-            f"{self.url}/versions/{self.version}/tables?format=json"
-        )
-
-    def set_dataset_tables(self, tables):
-        self.tables = tables
+    def get_dataset_table_objects(self):
+        dataset_tables = []
+        for table_id in self.table_ids:
+            this_dataset_table = DatasetTable(table_id, self)
+            dataset_tables.append(this_dataset_table)
+        return dataset_tables
 
     def get_dataset_report_ids(self, url):
         json_data = fetch_data_from_api(url)
@@ -96,17 +106,12 @@ class DatasetDetails(Dataset):
             return dataset_report_ids
         return None
 
-    def set_dataset_report_ids(self):
-        self.report_ids = self.get_dataset_report_ids(
-            f"{self.url}/versions/{self.version}/reports?format=json"
-        )
-
-    def set_dataset_reports(self, reports):
-        self.reports = reports
-
-    def set_dataset_versions(self):
-        versions = self.get_dataset_versions(f"{self.url}/versions?format=json")
-        self.versions = versions[0:20]
+    def get_dataset_report_objects(self):
+        dataset_reports = []
+        for report_id in self.report_ids:
+            this_dataset_report = DatasetReport(report_id, self)
+            dataset_reports.append(this_dataset_report)
+        return dataset_reports
 
 
 class BaseDatasetDataObject:
