@@ -9,6 +9,7 @@ class TestDatasetCatalogueView(TestCase):
     def setUp(self):
         self.view = DatasetCatalogueView()
         self.mock_valid_dataset_instance = MagicMock()
+        self.mock_dataset_no_versions = MagicMock()
 
         self.mock_valid_dataset_instance.id = "mock-dataset"
         self.mock_valid_dataset_instance.title = "Mock Dataset"
@@ -16,6 +17,10 @@ class TestDatasetCatalogueView(TestCase):
         self.mock_valid_dataset_instance.versions_count = 2
         self.mock_valid_dataset_instance.version_count_message = "2 versions"
         self.mock_valid_dataset_instance.latest_version = "v1.1"
+
+        self.mock_dataset_no_versions.id = "mock-dataset"
+        self.mock_dataset_no_versions.title = "Mock Dataset"
+        self.mock_dataset_no_versions.versions = None
 
     def test_view_is_instance_of_class(self):
         self.assertIsInstance(self.view, DatasetCatalogueView)
@@ -35,6 +40,17 @@ class TestDatasetCatalogueView(TestCase):
 
         result = self.view.get_dataset_objects(mock_dataset_ids)
         expected_value = {"mock-dataset": self.mock_valid_dataset_instance}
+
+        self.assertEqual(result, expected_value)
+
+    @patch("dataset_catalogue.views.Dataset")
+    def test_get_dataset_objects_dataset_has_no_versions(self, MockDataset):
+        mock_dataset_ids = ["mock-dataset"]
+
+        MockDataset.return_value = self.mock_dataset_no_versions
+
+        result = self.view.get_dataset_objects(mock_dataset_ids)
+        expected_value = {}
 
         self.assertEqual(result, expected_value)
 
