@@ -41,7 +41,7 @@ class DatasetCatalogueView(TemplateView):
         return context
 
 
-class DatasetDetailView(DatasetVersionBreadcrumbView):
+class DatasetDetailsView(DatasetVersionBreadcrumbView):
     template_name = "dataset_catalogue/details.html"
 
     def get_context_data(self, **kwargs):
