@@ -18,7 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from dataset_catalogue.views import DatasetCatalogueView, DatasetDetailView
+from dataset_catalogue.views import DatasetCatalogueView, DatasetDetailsView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -29,7 +29,7 @@ urlpatterns = [
     ),
     path(
         "<str:dataset_id>/<str:version>",
-        DatasetDetailView.as_view(),
-        name="dataset_detail_view",
+        DatasetDetailsView.as_view(),
+        name="dataset_details_view",
     ),
 ]
