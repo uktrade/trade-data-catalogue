@@ -68,3 +68,34 @@ class TestDatasetDetailView(TestCase):
             list(response.context["tables_page"]),
             self.mock_valid_dataset_details_instance.tables,
         )
+
+    @patch("dataset_catalogue.views.DatasetDetails")
+    def test_get_context_data_with_kwargs_has_reports(self, MockDatasetDetails):
+        mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
+
+        request = self.factory.get("/mock-dataset/v1.0.0")
+        request.kwargs = mock_kwargs
+
+        self.view.request = request
+
+        mock_repoort_object_instance = MagicMock()
+
+        mock_repoort_object_instance.id = "mock-report"
+
+        self.mock_valid_dataset_details_instance.reports = [
+            mock_repoort_object_instance
+        ]
+
+        MockDatasetDetails.return_value = self.mock_valid_dataset_details_instance
+
+        response = self.client.get(
+            reverse(
+                "dataset_details_view",
+                kwargs=mock_kwargs,
+            )
+        )
+
+        self.assertEqual(
+            list(response.context["reports_page"]),
+            self.mock_valid_dataset_details_instance.reports,
+        )
