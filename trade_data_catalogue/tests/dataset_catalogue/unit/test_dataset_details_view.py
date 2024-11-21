@@ -9,6 +9,10 @@ class TestDatasetDetailView(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
         self.view = DatasetDetailsView()
+        self.mock_valid_dataset_details_instance = MagicMock()
+
+        self.mock_valid_dataset_details_instance.id = "mock-dataset"
+        self.mock_valid_dataset_details_instance.version = "v1.0.0"
 
     def test_view_is_instance_of_class(self):
         self.assertIsInstance(self.view, DatasetDetailsView)
@@ -22,12 +26,7 @@ class TestDatasetDetailView(TestCase):
 
         self.view.request = request
 
-        mock_dataset_details_instance = MagicMock()
-
-        mock_dataset_details_instance.id = "mock-dataset"
-        mock_dataset_details_instance.version = "v1.0.0"
-
-        MockDatasetDetails.return_value = mock_dataset_details_instance
+        MockDatasetDetails.return_value = self.mock_valid_dataset_details_instance
 
         response = self.client.get(
             reverse(
@@ -38,5 +37,34 @@ class TestDatasetDetailView(TestCase):
 
         self.assertEqual(
             response.context["dataset"],
-            mock_dataset_details_instance,
+            self.mock_valid_dataset_details_instance,
+        )
+
+    @patch("dataset_catalogue.views.DatasetDetails")
+    def test_get_context_data_with_kwargs_has_tables(self, MockDatasetDetails):
+        mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
+
+        request = self.factory.get("/mock-dataset/v1.0.0")
+        request.kwargs = mock_kwargs
+
+        self.view.request = request
+
+        mock_table_object_instance = MagicMock()
+
+        mock_table_object_instance.id = "mock-table"
+
+        self.mock_valid_dataset_details_instance.tables = [mock_table_object_instance]
+
+        MockDatasetDetails.return_value = self.mock_valid_dataset_details_instance
+
+        response = self.client.get(
+            reverse(
+                "dataset_details_view",
+                kwargs=mock_kwargs,
+            )
+        )
+
+        self.assertEqual(
+            list(response.context["tables_page"]),
+            self.mock_valid_dataset_details_instance.tables,
         )
