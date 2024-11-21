@@ -11,7 +11,6 @@ class TestDatasetDetailsModel(TestCase):
     @patch("dataset_catalogue.models.fetch_data_from_api")
     def test_get_dataset_metadata(self, mock_fetch_dataset_details_api_data):
         mock_fetch_dataset_details_api_data.return_value = {"mock_key": "mock_value"}
-
         result = self.mock_valid_dataset_details_instance.get_dataset_metadata(self.mock_valid_dataset_details_instance.url)
         self.assertEqual(result, {"mock_key": "mock_value"})
     
@@ -20,4 +19,11 @@ class TestDatasetDetailsModel(TestCase):
         mock_fetch_dataset_details_api_data.return_value = None
         result = self.mock_valid_dataset_details_instance.get_dataset_metadata(self.mock_valid_dataset_details_instance.url)
         self.assertEqual(result, None)
+
+    @patch("dataset_catalogue.models.fetch_data_from_api")
+    def test_get_dataset_table_ids(self, mock_fetch_dataset_details_api_data):
+        mock_fetch_dataset_details_api_data.return_value = {"tables": [{"id": "mock-table-id"}]}
+        result = self.mock_valid_dataset_details_instance.get_dataset_table_ids(self.mock_valid_dataset_details_instance.url)
+        self.assertEqual(result, ["mock-table-id"])
+    
     
