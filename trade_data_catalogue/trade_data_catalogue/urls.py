@@ -30,6 +30,6 @@ urlpatterns = [
     path(
         "<str:dataset_id>/<str:version>",
         DatasetDetailsView.as_view(),
-        name="dataset_detail_view",
+        name="dataset_details_view",
     ),
 ]
