@@ -8,14 +8,14 @@ from dataset_catalogue.views import DatasetCatalogueView
 class TestDatasetCatalogueView(TestCase):
     def setUp(self):
         self.view = DatasetCatalogueView()
-        self.mock_dataset_instance = MagicMock()
+        self.mock_valid_dataset_instance = MagicMock()
 
-        self.mock_dataset_instance.id = "mock-dataset"
-        self.mock_dataset_instance.title = "Mock Dataset"
-        self.mock_dataset_instance.versions = ["v1.1", "v1.0"]
-        self.mock_dataset_instance.versions_count = 2
-        self.mock_dataset_instance.version_count_message = "2 versions"
-        self.mock_dataset_instance.latest_version = "v1.1"
+        self.mock_valid_dataset_instance.id = "mock-dataset"
+        self.mock_valid_dataset_instance.title = "Mock Dataset"
+        self.mock_valid_dataset_instance.versions = ["v1.1", "v1.0"]
+        self.mock_valid_dataset_instance.versions_count = 2
+        self.mock_valid_dataset_instance.version_count_message = "2 versions"
+        self.mock_valid_dataset_instance.latest_version = "v1.1"
 
     def test_view_is_instance_of_class(self):
         self.assertIsInstance(self.view, DatasetCatalogueView)
@@ -31,10 +31,10 @@ class TestDatasetCatalogueView(TestCase):
     def test_get_dataset_objects(self, MockDataset):
         mock_dataset_ids = ["mock-dataset"]
 
-        MockDataset.return_value = self.mock_dataset_instance
+        MockDataset.return_value = self.mock_valid_dataset_instance
 
         result = self.view.get_dataset_objects(mock_dataset_ids)
-        expected_value = {"mock-dataset": self.mock_dataset_instance}
+        expected_value = {"mock-dataset": self.mock_valid_dataset_instance}
 
         self.assertEqual(result, expected_value)
 
@@ -44,12 +44,13 @@ class TestDatasetCatalogueView(TestCase):
         mock_get_dataset_objects,
     ):
         mock_get_dataset_objects.return_value = {
-            "mock-dataset": self.mock_dataset_instance
+            "mock-dataset": self.mock_valid_dataset_instance
         }
         response = self.client.get(reverse("dataset_catalogue_view"))
 
         self.assertEqual(
-            response.context["datasets"], {"mock-dataset": self.mock_dataset_instance}
+            response.context["datasets"],
+            {"mock-dataset": self.mock_valid_dataset_instance},
         )
         self.assertEqual(response.context["dataset_count"], 1)
 
