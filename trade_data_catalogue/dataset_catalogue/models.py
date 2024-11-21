@@ -71,9 +71,9 @@ class DatasetDetails(Dataset):
         )
 
         if self.table_ids:
-            self.tables = self.get_dataset_table_objects()
+            self.tables = self.get_dataset_table_objects(self.table_ids)
         if self.report_ids:
-            self.reports = self.get_dataset_report_objects()
+            self.reports = self.get_dataset_report_objects(self.report_ids)
 
         self.versions = self.versions[0:20]
 
@@ -91,9 +91,9 @@ class DatasetDetails(Dataset):
             return dataset_table_ids
         return None
 
-    def get_dataset_table_objects(self):
+    def get_dataset_table_objects(self, table_ids):
         dataset_tables = []
-        for table_id in self.table_ids:
+        for table_id in table_ids:
             this_dataset_table = DatasetTable(table_id, self)
             dataset_tables.append(this_dataset_table)
         return dataset_tables
@@ -106,9 +106,9 @@ class DatasetDetails(Dataset):
             return dataset_report_ids
         return None
 
-    def get_dataset_report_objects(self):
+    def get_dataset_report_objects(self, report_ids):
         dataset_reports = []
-        for report_id in self.report_ids:
+        for report_id in report_ids:
             this_dataset_report = DatasetReport(report_id, self)
             dataset_reports.append(this_dataset_report)
         return dataset_reports
