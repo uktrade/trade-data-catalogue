@@ -1,0 +1,12 @@
+{
+  "id": "mock-dataset",
+  "version": "v1.0.1",
+  "title": "Mock Dataset",
+  "description": "Mock description of dataset.",
+  "versions": ["v1.0.1", "v1.0.0"],
+  "tables": [
+    { "id": "mock-table-small", "csv_row_count": 1500, "size": "Small" },
+    { "id": "mock-table-medium", "csv_row_count": 5000, "size": "Medium" },
+    { "id": "mock-table-medium", "csv_row_count": 10000, "size": "Large" }
+  ]
+}
