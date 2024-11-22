@@ -7,6 +7,6 @@
   "tables": [
     { "id": "mock-table-small", "csv_row_count": 1500, "size": "Small" },
     { "id": "mock-table-medium", "csv_row_count": 5000, "size": "Medium" },
-    { "id": "mock-table-medium", "csv_row_count": 10000, "size": "Large" }
+    { "id": "mock-table-large", "csv_row_count": 10000, "size": "Large" }
   ]
 }
