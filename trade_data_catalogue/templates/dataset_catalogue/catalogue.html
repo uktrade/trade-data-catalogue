@@ -15,6 +15,7 @@
     <h3 class="govuk-heading-m">
       <a
         class="govuk-link"
+        data-testid="dataset"
         id="{{dataset_id}}"
         href="{% url 'dataset_details_view' dataset_id=dataset.id version=dataset.latest_version %}"
         >{{dataset.title}}</a
