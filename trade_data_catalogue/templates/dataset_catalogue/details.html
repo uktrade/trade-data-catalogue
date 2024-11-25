@@ -50,7 +50,9 @@
         </li>
         {% endif %} {% if dataset.reports %}
         <li class="govuk-tabs__list-item">
-          <a class="govuk-tabs__tab" href="#reports"> Reports </a>
+          <a class="govuk-tabs__tab" href="#reports" data-testid="reports-tab">
+            Reports
+          </a>
         </li>
         {% endif %}
       </ul>
@@ -203,7 +205,9 @@
             {% for report in reports_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <a class="govuk-link">{{report.id}}</a>
+                <a class="govuk-link" data-testid="dataset-report-link"
+                  >{{report.id}}</a
+                >
               </td>
               <td class="govuk-table__cell govuk-!-text-align-center">
                 {% if report.csv_row_count == 10000 %} {{report.csv_row_count}}+
@@ -308,7 +312,10 @@
     </div>
   </div>
 
-  <div class="govuk-!-static-padding-top-3">
+  <div
+    class="govuk-!-static-padding-top-3"
+    data-testid="previous-versions-container"
+  >
     <h2 class="govuk-heading-m">Versions</h2>
     <p class="govuk-body">
       Limited to the previous 20 versions prior to the latest version
