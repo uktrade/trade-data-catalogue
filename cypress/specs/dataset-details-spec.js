@@ -20,8 +20,8 @@ describe("Dataset details page", () => {
       cy.get('a[data-testid="tables-tab"]').should("exist");
     });
 
-    // it("Has tables", () => {
-    //   cy.get('a[data-testid="table-id"]').should("exist");
-    // });
+    it("Has tables", () => {
+      cy.get('a[data-testid="dataset-table-link"]').should("exist");
+    });
   });
 });
