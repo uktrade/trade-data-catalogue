@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.urls import path
 
-from dataset_catalogue.views import DatasetCatalogueView, DatasetDetailsView
+from dataset_catalogue.views import (
+    DatasetCatalogueView,
+    DatasetDetailsView,
+    DatasetDataPreviewView,
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -14,5 +18,10 @@ urlpatterns = [
         "<str:dataset_id>/<str:version>",
         DatasetDetailsView.as_view(),
         name="dataset_details_view",
+    ),
+    path(
+        "<str:dataset_id>/<str:version>/<str:data_id>",
+        DatasetDataPreviewView.as_view(),
+        name="dataset_data_preview_view",
     ),
 ]
