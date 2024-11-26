@@ -74,3 +74,7 @@ class DatasetDetailsView(DatasetVersionBreadcrumbView):
             context["reports_page"] = reports_page
 
         return context
+
+
+class DatasetDataPreviewView(DatasetVersionBreadcrumbView):
+    template_name = "dataset_catalogue/preview.html"
