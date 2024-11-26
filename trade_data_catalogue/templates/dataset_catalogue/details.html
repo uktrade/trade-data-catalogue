@@ -81,7 +81,10 @@
             {% for table in tables_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <a class="govuk-link" data-testid="dataset-table-link"
+                <a
+                  class="govuk-link"
+                  data-testid="dataset-table-link"
+                  href="{% url 'dataset_data_preview_view' dataset_id=dataset.id version=dataset.latest_version data_id=table.id %}"
                   >{{table.id}}</a
                 >
               </td>
@@ -205,7 +208,10 @@
             {% for report in reports_page %}
             <tr class="govuk-table__row">
               <td class="govuk-table__cell">
-                <a class="govuk-link" data-testid="dataset-report-link"
+                <a
+                  class="govuk-link"
+                  data-testid="dataset-report-link"
+                  href="{% url 'dataset_data_preview_view' dataset_id=dataset.id version=dataset.latest_version data_id=report.id %}"
                   >{{report.id}}</a
                 >
               </td>
