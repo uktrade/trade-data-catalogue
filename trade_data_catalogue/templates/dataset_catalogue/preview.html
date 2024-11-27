@@ -1,23 +1,39 @@
-{% extends "base.html" %} {% block content %}
+{% extends "base.html" %} {% load static %} {% block styling %}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'styling/data-preview-override.css' %}"
+/>
+{% endblock %} {% block content %}
 <div class="govuk-width-container">
   <p>{{row_count}}</p>
-  <table>
-    <thead>
-      <tr>
-        {% for header in data_headers %}
-        <th>{{header}}</th>
+</div>
+
+<div class="data-preview-scroll-box">
+  <div class="data-preview-content">
+    <table class="govuk-table">
+      <thead class="data-preview-headers">
+        <tr class="govuk-table__row">
+          {% for header in data_headers %}
+          <th class="govuk-body-s govuk-table__header">
+            <div class="vertical-separator"></div>
+            {{header}}
+          </th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody class="data-preview-body">
+        {% for row in data_rows %}
+        <tr class="govuk-table__row">
+          {% for item in row %}
+          <td class="govuk-body-s govuk-table__cell data-preview-cell">
+            {{item}}
+          </td>
+          {% endfor %}
+        </tr>
         {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for row in data_rows %}
-      <tr>
-        {% for item in row %}
-        <td>{{item}}</td>
-        {% endfor %}
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}

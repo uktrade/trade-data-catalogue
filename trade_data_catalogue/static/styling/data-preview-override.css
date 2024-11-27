@@ -1,0 +1,45 @@
+.data-preview-scroll-box {
+  width: 100%;       
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.data-preview-content {
+  display: inline-flex;
+}
+
+.data-preview-th {
+  text-align: left;
+}
+
+.data-preview-headers tr{
+  background-color: #f3f2f1;
+}
+
+.data-preview-body tr:nth-child(even) {
+  background-color: #f3f2f1;
+}
+
+.govuk-table {
+  border-width: 1px;
+}
+
+.govuk-table__cell {    
+  max-width: 1000px;
+  min-width: 200px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.data-preview-cell {
+  padding-left: 25.5px;
+}
+
+.vertical-separator {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background-color: #000; 
+  vertical-align: middle;
+  margin-right: 20px;
+}
