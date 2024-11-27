@@ -89,6 +89,8 @@ class DatasetDataPreviewView(DatasetVersionBreadcrumbView):
 
         dataset = DatasetDataPreview(dataset_id, version, data_type, data_id)
         context["dataset"] = dataset
+        context["data_headers"] = dataset.data_object.csv_headers
+        context["row_count"] = dataset.data_object.csv_row_count
         context["data_rows"] = dataset.data_object.csv_rows
         return context
 

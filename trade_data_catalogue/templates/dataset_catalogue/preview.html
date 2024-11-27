@@ -1,13 +1,23 @@
 {% extends "base.html" %} {% block content %}
 <div class="govuk-width-container">
+  <p>{{row_count}}</p>
   <table>
-    {% for row in data_rows %}
-    <tr>
-      {% for item in row %}
-      <td>{{item}}</td>
+    <thead>
+      <tr>
+        {% for header in data_headers %}
+        <th>{{header}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in data_rows %}
+      <tr>
+        {% for item in row %}
+        <td>{{item}}</td>
+        {% endfor %}
+      </tr>
       {% endfor %}
-    </tr>
-    {% endfor %}
+    </tbody>
   </table>
 </div>
 {% endblock %}
