@@ -130,9 +130,9 @@ class BaseDatasetDataObject:
     def set_raw_csv_data(self):
         self.raw_csv_data = self.get_raw_csv_data(self.data_url)
 
-    def set_csv_data(self):
+    def set_csv_data(self, limit_rows):
         self.csv_headers, self.csv_rows, self.csv_row_count = (
-            read_and_parse_raw_csv_data(self.raw_csv_data)
+            read_and_parse_raw_csv_data(self.raw_csv_data, limit_rows=limit_rows)
         )
 
     def set_size_messsage(self):
@@ -154,3 +154,23 @@ class DatasetReport(BaseDatasetDataObject):
     def __init__(self, id, dataset):
         super().__init__(id, dataset)
         self.data_url = f"{self.dataset.url}/versions/{self.dataset.version}/reports/{self.id}/data?format=csv"
+
+
+class DatasetDataPreview(Dataset):
+    def __init__(self, id, version, data_type, data_id):
+        super().__init__(id)
+
+        self.version = version
+        self.data_type = data_type
+        self.data_id = data_id
+        self.data_object = self.get_dataset_data_object(self.data_id, self.data_type)
+    
+    def get_dataset_data_object(self, data_id, data_type):
+        if data_type == "table":
+           data_object = DatasetTable(data_id, self)
+        if data_type == "report":
+           data_object = DatasetReport(data_id, self)
+        
+        data_object.set_raw_csv_data()
+        data_object.set_csv_data(False)
+        return data_object

@@ -4,7 +4,7 @@ from django.core.paginator import Paginator
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
 
-from .models import Dataset, DatasetDetails
+from .models import Dataset, DatasetDetails, DatasetDataPreview
 from trade_data_catalogue.base import DatasetVersionBreadcrumbView
 
 
@@ -59,7 +59,7 @@ class DatasetDetailsView(DatasetVersionBreadcrumbView):
             tables_page = tables_paginator.get_page(tables_page_number)
             for table in tables_page:
                 table.set_raw_csv_data()
-                table.set_csv_data()
+                table.set_csv_data(True)
                 table.set_size_messsage()
             context["tables_page"] = tables_page
 
@@ -69,7 +69,7 @@ class DatasetDetailsView(DatasetVersionBreadcrumbView):
             reports_page = reports_paginator.get_page(reports_page_number)
             for report in reports_page:
                 report.set_raw_csv_data()
-                report.set_csv_data()
+                report.set_csv_data(True)
                 report.set_size_messsage()
             context["reports_page"] = reports_page
 
@@ -78,3 +78,19 @@ class DatasetDetailsView(DatasetVersionBreadcrumbView):
 
 class DatasetDataPreviewView(DatasetVersionBreadcrumbView):
     template_name = "dataset_catalogue/preview.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        dataset_id = kwargs.get("dataset_id")
+        version = kwargs.get("version")
+        data_type = kwargs.get("data_type")
+        data_id = kwargs.get("data_id")
+
+        dataset = DatasetDataPreview(dataset_id, version, data_type, data_id)
+        context["dataset"] = dataset
+        context["data_rows"] = dataset.data_object.csv_rows
+        return context
+
+
+
