@@ -109,7 +109,7 @@
                 <a
                   class="govuk-link"
                   data-testid="dataset-table-link"
-                  href="{% url 'dataset_data_preview_view' dataset_id=dataset.id version=dataset.latest_version data_id=table.id %}"
+                  href="{% url 'dataset_data_preview_view' dataset_id=dataset.id version=version data_type='table' data_id=table.id %}"
                   >{{table.id}}</a
                 >
               </td>
@@ -236,7 +236,7 @@
                 <a
                   class="govuk-link"
                   data-testid="dataset-report-link"
-                  href="{% url 'dataset_data_preview_view' dataset_id=dataset.id version=dataset.latest_version data_id=report.id %}"
+                  href="{% url 'dataset_data_preview_view' dataset_id=dataset.id version=version data_type='report' data_id=report.id %}"
                   >{{report.id}}</a
                 >
               </td>

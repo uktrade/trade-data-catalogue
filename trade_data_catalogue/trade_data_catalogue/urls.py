@@ -20,7 +20,7 @@ urlpatterns = [
         name="dataset_details_view",
     ),
     path(
-        "<str:dataset_id>/<str:version>/<str:data_id>",
+        "<str:dataset_id>/<str:version>/<str:data_type>/<str:data_id>",
         DatasetDataPreviewView.as_view(),
         name="dataset_data_preview_view",
     ),
