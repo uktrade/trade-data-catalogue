@@ -88,11 +88,24 @@ class DatasetDataPreviewView(DatasetVersionBreadcrumbView):
         data_id = kwargs.get("data_id")
 
         dataset = DatasetDataPreview(dataset_id, version, data_type, data_id)
+
+        rows_per_page = 20
+
+        rows_paginator = Paginator(dataset.data_object.csv_rows, rows_per_page)
+        rows_page_number = int(self.request.GET.get("rows_page", 1))
+        rows_page = rows_paginator.get_page(rows_page_number)
+
+        upper_rows_threshold = rows_per_page * rows_page_number
+        lower_rows_threshold = upper_rows_threshold - (rows_per_page - 1)
+
+        if len(rows_page) < rows_per_page:
+            upper_rows_threshold = (lower_rows_threshold + len(rows_page)) - 1
+
         context["dataset"] = dataset
         context["data_headers"] = dataset.data_object.csv_headers
         context["row_count"] = dataset.data_object.csv_row_count
-        context["data_rows"] = dataset.data_object.csv_rows
+        context["rows_page"] = rows_page
+        context["lower_rows_threshold"] = lower_rows_threshold
+        context["upper_rows_threshold"] = upper_rows_threshold
+
         return context
-
-
-
