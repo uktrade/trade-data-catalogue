@@ -143,6 +143,20 @@ class BaseDatasetDataObject:
         elif self.csv_row_count >= 10000:
             self.size = "Large"
 
+    def set_column_metadata(self, tables_metadata):
+        for table in tables_metadata:
+            if self.id in table["url"]:
+                columns = []
+                for column in table["tableSchema"]["columns"]:
+                    this_column = Column(column["name"], column["dc:description"])
+                    columns.append(this_column)
+                break
+        self.columns = columns
+        
+class Column:
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
 
 class DatasetTable(BaseDatasetDataObject):
     def __init__(self, id, dataset):
@@ -164,6 +178,13 @@ class DatasetDataPreview(Dataset):
         self.data_type = data_type
         self.data_id = data_id
         self.data_object = self.get_dataset_data_object(self.data_id, self.data_type)
+
+        self.metadata = self.get_dataset_metadata(
+            f"{self.url}/versions/{self.version}/metadata?format=csvw"
+        )
+        if "tables" in self.metadata:
+            self.tables_metadata = self.metadata["tables"]
+            self.data_object.set_column_metadata(self.tables_metadata)
     
     def get_dataset_data_object(self, data_id, data_type):
         if data_type == "table":
@@ -174,3 +195,9 @@ class DatasetDataPreview(Dataset):
         data_object.set_raw_csv_data()
         data_object.set_csv_data(False)
         return data_object
+    
+    def get_dataset_metadata(self, url):
+        csvw_data = fetch_data_from_api(url)
+        if csvw_data is None:
+            return None
+        return csvw_data

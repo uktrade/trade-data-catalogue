@@ -7,6 +7,10 @@
 {% endblock %} {% block content %}
 <div class="govuk-width-container">
   <!-- <p>{{row_count}}</p> -->
+  {% for column in columns_metadata %}
+  <p>{{column.name}}</p>
+  <p>{{column.description}}</p>
+  {% endfor %}
   <div
     class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
   >
