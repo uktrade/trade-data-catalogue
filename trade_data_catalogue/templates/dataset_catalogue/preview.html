@@ -18,14 +18,18 @@
     </h1>
     <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
   </div>
+
   <!-- <p>{{row_count}}</p> -->
+
   <div
     class="govuk-!-static-padding-top-3"
     data-testid="previous-versions-container"
   >
     <details class="govuk-details">
       <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text"> Columns metadata </span>
+        <span class="govuk-details__summary-text"
+          >{{data_type}} columns metadata
+        </span>
       </summary>
       <div class="govuk-!-static-padding-top-3">
         {% if columns_metadata %}
@@ -49,7 +53,9 @@
             {% endfor %}
           </tbody>
         </table>
+
         {% else %}
+
         <div
           class="govuk-notification-banner"
           role="region"
@@ -66,7 +72,7 @@
           </div>
           <div class="govuk-notification-banner__content">
             <h3 class="govuk-notification-banner__heading">
-              Dataset metadata currently not available
+              {{data_type}} metadata currently not available
             </h3>
             <p class="govuk-body">No column metadata is available.</p>
           </div>
@@ -75,6 +81,7 @@
       </div>
     </details>
   </div>
+
   <div
     class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
   >
