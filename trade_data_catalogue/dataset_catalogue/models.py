@@ -144,14 +144,16 @@ class BaseDatasetDataObject:
             self.size = "Large"
 
     def set_column_metadata(self, tables_metadata):
+        columns = []
         for table in tables_metadata:
             if self.id in table["url"]:
-                columns = []
+                self.title = table["dc:title"]
                 for column in table["tableSchema"]["columns"]:
                     this_column = Column(column["name"], column["dc:description"])
                     columns.append(this_column)
                 break
-        self.columns = columns
+        if columns != None:
+            self.columns = columns
         
 class Column:
     def __init__(self, name, description):

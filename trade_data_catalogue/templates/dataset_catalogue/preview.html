@@ -6,6 +6,12 @@
 />
 {% endblock %} {% block content %}
 <div class="govuk-width-container">
+  <h1
+    class="govuk-heading-l govuk-!-static-margin-bottom-2"
+    data-testid="dataset-details-header"
+  >
+    {{dataset.data_object.title}}
+  </h1>
   <!-- <p>{{row_count}}</p> -->
   <div
     class="govuk-!-static-padding-top-3"
