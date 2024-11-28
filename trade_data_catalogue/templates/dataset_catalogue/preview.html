@@ -7,24 +7,62 @@
 {% endblock %} {% block content %}
 <div class="govuk-width-container">
   <!-- <p>{{row_count}}</p> -->
-  <table class="govuk-table">
-    <thead class="govuk-table__head">
-      <tr class="govuk-table__row">
-        <th scope="col" class="govuk-table__header">Column name</th>
-        <th scope="col" class="govuk-table__header">Description</th>
-      </tr>
-    </thead>
-    <tbody class="govuk-table__body">
-      {% for column in columns_metadata %}
-      <tr class="govuk-table__row">
-        <th scope="row" class="govuk-table__header govuk-body-s">
-          {{column.name}}
-        </th>
-        <td class="govuk-table__cell govuk-body-s">{{column.description}}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div
+    class="govuk-!-static-padding-top-3"
+    data-testid="previous-versions-container"
+  >
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text"> Columns metadata </span>
+      </summary>
+      <div class="govuk-!-static-padding-top-3">
+        {% if columns_metadata %}
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Column name</th>
+              <th scope="col" class="govuk-table__header">Description</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for column in columns_metadata %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s">
+                {{column.name}}
+              </th>
+              <td class="govuk-table__cell govuk-body-s">
+                {{column.description}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div
+          class="govuk-notification-banner"
+          role="region"
+          aria-labelledby="govuk-notification-banner-title"
+          data-module="govuk-notification-banner"
+        >
+          <div class="govuk-notification-banner__header">
+            <h2
+              class="govuk-notification-banner__title"
+              id="govuk-notification-banner-title"
+            >
+              Important
+            </h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <h3 class="govuk-notification-banner__heading">
+              Dataset metadata currently not available
+            </h3>
+            <p class="govuk-body">No column metadata is available.</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </details>
+  </div>
   <div
     class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
   >
