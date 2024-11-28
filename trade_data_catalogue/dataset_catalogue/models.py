@@ -118,6 +118,7 @@ class BaseDatasetDataObject:
     def __init__(self, id, dataset):
         self.id = id
         self.dataset = dataset
+        self.title = self.get_formatted_data_object_title(self.id)
 
     def get_raw_csv_data(self, url):
         csv_data = fetch_data_from_api(
@@ -147,13 +148,21 @@ class BaseDatasetDataObject:
         columns = []
         for table in tables_metadata:
             if self.id in table["url"]:
-                self.title = table["dc:title"]
+                self.subtitle = table["dc:title"]
                 for column in table["tableSchema"]["columns"]:
                     this_column = Column(column["name"], column["dc:description"])
                     columns.append(this_column)
                 break
         if columns != None:
             self.columns = columns
+    
+    def get_formatted_data_object_title(self, data_object_id):
+        dehyphenated_data_object_id = data_object_id.replace("-", " ")
+        title_cased_data_object_id = dehyphenated_data_object_id.title()
+        data_object_title_with_correct_region = get_transformed_string_from_pattern(
+            title_cased_data_object_id, r"\b(Uk|Eu)\b"
+        )
+        return data_object_title_with_correct_region
         
 class Column:
     def __init__(self, name, description):

@@ -6,12 +6,18 @@
 />
 {% endblock %} {% block content %}
 <div class="govuk-width-container">
-  <h1
-    class="govuk-heading-l govuk-!-static-margin-bottom-2"
-    data-testid="dataset-details-header"
+  <div
+    class="govuk-!-static-margin-bottom-5"
+    data-testid="dataset-details-header-container"
   >
-    {{dataset.data_object.title}}
-  </h1>
+    <h1
+      class="govuk-heading-l govuk-!-static-margin-bottom-2"
+      data-testid="dataset-details-header"
+    >
+      {{dataset.data_object.title}}
+    </h1>
+    <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
+  </div>
   <!-- <p>{{row_count}}</p> -->
   <div
     class="govuk-!-static-padding-top-3"
