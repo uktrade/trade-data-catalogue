@@ -1,0 +1,59 @@
+.data-preview-scroll-box {
+  width: 100%;       
+  overflow-x: auto;
+  white-space: nowrap;
+  background-color: #f3f2f1;
+  border-width: 1px;
+  border-color: #b1b4b6;
+  border-style: solid;
+}
+
+.data-preview-content {
+  display: inline-flex;
+}
+
+.data-preview-th {
+  text-align: left;
+}
+
+.data-preview-headers tr {
+  background-color: #f3f2f1;
+}
+
+.data-preview-body tr:nth-child(odd) {
+  background-color: white;
+}
+
+.data-preview-body tr:nth-child(even) {
+  background-color: #f3f2f1;
+}
+
+.govuk-table {
+  margin-bottom: 0;
+}
+
+.govuk-table__cell {    
+  max-width: 1000px;
+  min-width: 400px;
+  word-wrap: break-word;
+  white-space: normal;
+  text-align: left;
+}
+
+.data-preview-cell {
+  padding-left: 25.5px;
+  padding-right: 25px;
+}
+
+.vertical-separator {
+  display: inline-block;
+  width: 1px;
+  height: 20px;
+  background-color: #b1b4b6; 
+  vertical-align: middle;
+  margin-right: 20px;
+}
+
+.govuk-pagination__item:hover {
+  background-color: white;
+}
