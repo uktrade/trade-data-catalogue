@@ -102,6 +102,10 @@ class DatasetDataPreviewView(DatasetVersionBreadcrumbView):
             upper_rows_threshold = (lower_rows_threshold + len(rows_page)) - 1
 
         context["dataset"] = dataset
+
+        if hasattr(dataset.data_object, "columns"):
+            context["columns_metadata"] = dataset.data_object.columns
+
         context["data_headers"] = dataset.data_object.csv_headers
         context["row_count"] = dataset.data_object.csv_row_count
         context["rows_page"] = rows_page
