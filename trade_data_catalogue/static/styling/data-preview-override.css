@@ -53,3 +53,7 @@
   vertical-align: middle;
   margin-right: 20px;
 }
+
+.govuk-pagination__item:hover {
+  background-color: white;
+}
