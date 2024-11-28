@@ -7,10 +7,24 @@
 {% endblock %} {% block content %}
 <div class="govuk-width-container">
   <!-- <p>{{row_count}}</p> -->
-  {% for column in columns_metadata %}
-  <p>{{column.name}}</p>
-  <p>{{column.description}}</p>
-  {% endfor %}
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Column name</th>
+        <th scope="col" class="govuk-table__header">Description</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      {% for column in columns_metadata %}
+      <tr class="govuk-table__row">
+        <th scope="row" class="govuk-table__header govuk-body-s">
+          {{column.name}}
+        </th>
+        <td class="govuk-table__cell govuk-body-s">{{column.description}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
   <div
     class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
   >
