@@ -15,12 +15,12 @@ urlpatterns = [
         name="dataset_catalogue_view",
     ),
     path(
-        "<str:dataset_id>/<str:version>",
+        "dataset-id-<str:dataset_id>/<str:version>",
         DatasetDetailsView.as_view(),
         name="dataset_details_view",
     ),
     path(
-        "<str:dataset_id>/<str:version>/<str:data_type>/<str:data_id>",
+        "dataset-id-<str:dataset_id>/<str:version>/<str:data_type>/<str:data_id>",
         DatasetDataPreviewView.as_view(),
         name="dataset_data_preview_view",
     ),

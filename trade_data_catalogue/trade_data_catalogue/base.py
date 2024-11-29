@@ -1,31 +1,49 @@
 from django.views.generic import TemplateView
 
-from .utils import get_breadcrumbs, get_transformed_string_from_pattern
+from .utils import (
+    get_transformed_string_from_pattern,
+    is_string_a_version,
+    is_string_a_dataset_id,
+)
+
 
 class BaseBreadcrumbView(TemplateView):
-    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["breadcrumbs"] = get_breadcrumbs(self.request.path)
+        path = self.request.path
+
+        context["breadcrumbs"] = self.get_breadcrumbs(path)
+
         return context
 
+    def get_breadcrumbs(self, path):
+        breadcrumbs = [{"name": "Dataset Catalogue", "url": "/"}]
+        segments = [segment for segment in path.strip("/").split("/") if segment]
 
-class DatasetVersionBreadcrumbView(TemplateView):
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        dataset_id = kwargs.get("dataset_id")
-        version = kwargs.get("version")
-        context["breadcrumbs"] = self.dataset_version_breadcrumbs(dataset_id, version)
-        return context
-    
-    def dataset_version_breadcrumbs(self, dataset_id, version):  
-        breadcrumbs = [{ "name": "Dataset Catalogue", "url": "/"}]
-        dataset_url = f"/{dataset_id}/{version}"
-        breadcrumbs.append({ "name": self.get_formatted_dataset_breadcrumb_title(dataset_id), "url": dataset_url })
+        url = ""
+        for segment in segments:
+            url += f"/{segment}"
+
+            if segment == "table" or segment == "report":
+                continue
+
+            breadcrumbs.append(
+                {
+                    "name": (
+                        self.get_formatted_dataset_breadcrumb_title(segment)
+                        if not is_string_a_version(segment)
+                        else segment
+                    ),
+                    "url": url,
+                    "is_dataset_id": is_string_a_dataset_id(segment),
+                }
+            )
+
         return breadcrumbs
-    
+
     def get_formatted_dataset_breadcrumb_title(self, dataset_id):
-        dehyphenated_dataset_id = dataset_id.replace("-", " ")
+        remove_dataset_id_text = dataset_id.replace("dataset-id", "")
+        dehyphenated_dataset_id = remove_dataset_id_text.replace("-", " ")
         title_cased_dataset_id = dehyphenated_dataset_id.title()
         dataset_title_with_correct_region = get_transformed_string_from_pattern(
             title_cased_dataset_id, r"\b(Uk|Eu)\b"
