@@ -5,16 +5,15 @@
     aria-label="Breadcrumb"
   >
     <ol class="govuk-breadcrumbs__list">
-      {% for breadcrumb in breadcrumbs %} {% if breadcrumb.url %}
+      {% for breadcrumb in breadcrumbs %}
       <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-breadcrumbs__link" href="{{breadcrumb.url}}"
+        <a
+          class="govuk-breadcrumbs__link"
+          href="{% if breadcrumb.url %}{{breadcrumb.url}}{% endif %}"
           >{{breadcrumb.name}}</a
         >
       </li>
-      {% endif %} {% endfor %}
-      <li class="govuk-breadcrumbs__list-item">
-        <a class="govuk-body-s">{{dataset.version}}</a>
-      </li>
+      {% endfor %}
     </ol>
   </nav>
   <div

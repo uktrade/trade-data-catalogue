@@ -6,6 +6,23 @@
 />
 {% endblock %} {% block content %}
 <div class="govuk-width-container">
+  <nav
+    class="govuk-breadcrumbs govuk-!-static-margin-bottom-8 govuk-!-static-margin-top-0"
+    aria-label="Breadcrumb"
+  >
+    <ol class="govuk-breadcrumbs__list">
+      {% for breadcrumb in breadcrumbs %}
+      <li class="govuk-breadcrumbs__list-item">
+        <a
+          class="govuk-breadcrumbs__link"
+          href="{% if breadcrumb.url %}{{breadcrumb.url}}{% endif %}"
+          >{{breadcrumb.name}}</a
+        >
+      </li>
+      {% endfor %}
+    </ol>
+  </nav>
+
   <div
     class="govuk-!-static-margin-bottom-5"
     data-testid="dataset-details-header-container"
