@@ -38,3 +38,7 @@ def get_transformed_string_from_pattern(string, pattern):
 
 def is_string_a_version(string):
     return re.match(r"^v\d+\.\d+\.\d+$", string)
+
+
+def is_string_a_dataset_id(string):
+    return re.match(r"dataset-id(-[a-zA-Z0-9]+)+", string)
