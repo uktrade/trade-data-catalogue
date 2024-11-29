@@ -1,6 +1,10 @@
 from django.views.generic import TemplateView
 
-from .utils import get_transformed_string_from_pattern, is_string_a_version
+from .utils import (
+    get_transformed_string_from_pattern,
+    is_string_a_version,
+    is_string_a_dataset_id,
+)
 
 
 class BaseBreadcrumbView(TemplateView):
@@ -15,8 +19,6 @@ class BaseBreadcrumbView(TemplateView):
     def get_breadcrumbs(self, path):
         breadcrumbs = [{"name": "Dataset Catalogue", "url": "/"}]
         segments = [segment for segment in path.strip("/").split("/") if segment]
-
-        print(segments)
 
         url = ""
         for segment in segments:
@@ -33,15 +35,15 @@ class BaseBreadcrumbView(TemplateView):
                         else segment
                     ),
                     "url": url,
+                    "is_dataset_id": is_string_a_dataset_id(segment),
                 }
             )
-
-        print(breadcrumbs)
 
         return breadcrumbs
 
     def get_formatted_dataset_breadcrumb_title(self, dataset_id):
-        dehyphenated_dataset_id = dataset_id.replace("-", " ")
+        remove_dataset_id_text = dataset_id.replace("dataset-id", "")
+        dehyphenated_dataset_id = remove_dataset_id_text.replace("-", " ")
         title_cased_dataset_id = dehyphenated_dataset_id.title()
         dataset_title_with_correct_region = get_transformed_string_from_pattern(
             title_cased_dataset_id, r"\b(Uk|Eu)\b"
