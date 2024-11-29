@@ -22,6 +22,9 @@ class BaseBreadcrumbView(TemplateView):
         for segment in segments:
             url += f"/{segment}"
 
+            if segment == "table" or segment == "report":
+                continue
+
             breadcrumbs.append(
                 {
                     "name": (
@@ -29,13 +32,7 @@ class BaseBreadcrumbView(TemplateView):
                         if not is_string_a_version(segment)
                         else segment
                     ),
-                    "url": (
-                        url
-                        if not is_string_a_version(segment)
-                        or segment != "table"
-                        or segment != "report"
-                        else None
-                    ),
+                    "url": url,
                 }
             )
 
