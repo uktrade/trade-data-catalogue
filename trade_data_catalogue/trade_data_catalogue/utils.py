@@ -36,15 +36,5 @@ def get_transformed_string_from_pattern(string, pattern):
     return re.sub(pattern, lambda match: match.group(0).upper(), string)
 
 
-def get_breadcrumbs(path):
-    breadcrumbs = [{ "name": "Dataset Catalogue", "url": "/"}]
-    segments = [segment for segment in path.strip("/").split("/") if segment]
-
-    url = "/"
-    for segment in segments:
-        url += f"{segment}/"
-        breadcrumbs.append({ "name": segment.capitalize(), "url": url})
-    
-    if breadcrumbs:
-        breadcrumbs[-1]["url"] = None
-    return breadcrumbs
+def is_string_a_version(string):
+    return re.match(r"^v\d+\.\d+\.\d+$", string)
