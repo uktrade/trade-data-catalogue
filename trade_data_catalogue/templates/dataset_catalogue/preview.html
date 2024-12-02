@@ -36,10 +36,8 @@
     <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
   </div>
 
-  <!-- <p>{{row_count}}</p> -->
-
   <div
-    class="govuk-!-static-padding-top-3"
+    class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-9"
     data-testid="previous-versions-container"
   >
     <details class="govuk-details">
@@ -98,7 +96,16 @@
       </div>
     </details>
   </div>
-
+</div>
+<hr class="govuk-section-break govuk-section-break--visible" />
+<div class="data-preview-controls govuk-!-static-padding-3">
+  <button
+    type="submit"
+    class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"
+  >
+    Download data
+  </button>
   <div
     class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
   >
@@ -168,8 +175,8 @@
       </ul>
     </nav>
   </div>
+  <p class="row-count govuk-body-s">{{row_count}} rows</p>
 </div>
-
 <div class="data-preview-scroll-box">
   <div class="data-preview-content">
     <table class="govuk-table">

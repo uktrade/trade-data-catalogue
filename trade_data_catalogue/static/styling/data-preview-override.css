@@ -1,5 +1,5 @@
 .data-preview-scroll-box {
-  width: 100%;       
+  width: 100%;
   overflow-x: auto;
   white-space: nowrap;
   background-color: #f3f2f1;
@@ -32,7 +32,7 @@
   margin-bottom: 0;
 }
 
-.govuk-table__cell {    
+.govuk-table__cell {
   max-width: 1000px;
   min-width: 400px;
   word-wrap: break-word;
@@ -49,11 +49,24 @@
   display: inline-block;
   width: 1px;
   height: 20px;
-  background-color: #b1b4b6; 
+  background-color: #b1b4b6;
   vertical-align: middle;
   margin-right: 20px;
 }
 
 .govuk-pagination__item:hover {
   background-color: white;
+}
+
+.data-preview-controls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.govuk-pagination,
+.govuk-button,
+.row-count {
+  margin-bottom: 0;
 }
