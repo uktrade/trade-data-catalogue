@@ -1,5 +1,7 @@
+from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
+import csv
 
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import fetch_data_from_api
@@ -114,3 +116,30 @@ class DatasetDataPreviewView(BaseBreadcrumbView):
         context["upper_rows_threshold"] = upper_rows_threshold
 
         return context
+
+    def download_csv(self, dataset):
+        data_object = dataset.data_object
+
+        response = HttpResponse(content_type="text/csv")
+        response["Content-Disposition"] = f'attachment; filename="{dataset.id}-{dataset.version}-{data_object.id}.csv"'
+
+        writer = csv.writer(response)
+        writer.writerow(data_object.csv_headers)
+
+        for row in data_object.csv_rows:
+            writer.writerow(row)
+
+        return response
+    
+    def get(self, request, *args, **kwargs):
+        if "download" in request.GET:
+            dataset_id = kwargs.get("dataset_id")
+            version = kwargs.get("version")
+            data_type = kwargs.get("data_type")
+            data_id = kwargs.get("data_id")
+
+            dataset = DatasetDataPreview(dataset_id, version, data_type, data_id)
+
+            return self.download_csv(dataset)
+        
+        return super().get(request, *args, **kwargs)
