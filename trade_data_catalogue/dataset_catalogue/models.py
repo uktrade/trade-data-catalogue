@@ -188,11 +188,11 @@ class DatasetDataPreview(Dataset):
         self.version = version
         self.data_type = data_type
         self.data_id = data_id
-        self.data_object = self.get_dataset_data_object(self.data_id, self.data_type)
-
         self.metadata = self.get_dataset_metadata(
             f"{self.url}/versions/{self.version}/metadata?format=csvw"
         )
+        self.data_object = self.get_dataset_data_object(self.data_id, self.data_type)
+
         if "tables" in self.metadata:
             self.tables_metadata = self.metadata["tables"]
             self.data_object.set_column_metadata(self.tables_metadata)
