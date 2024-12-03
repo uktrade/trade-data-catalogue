@@ -42,7 +42,6 @@ class TestDatasetDataPreviewModel(TestCase):
         mock_table_instance = MagicMock()
         mock_table_instance.id = "mock-table"
 
-        
         MockDatasetTable.return_value = mock_table_instance
 
         mock_valid_dataset_data_preview_instance = DatasetDataPreview(
