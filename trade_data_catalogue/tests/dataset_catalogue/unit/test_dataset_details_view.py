@@ -20,15 +20,15 @@ class TestDatasetDetailView(TestCase):
         self.mock_table_object_instance.id = "mock-table"
         self.mock_report_object_instance.id = "mock-report"
 
+        self.mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
+
     def test_view_is_instance_of_class(self):
         self.assertIsInstance(self.view, DatasetDetailsView)
 
     @patch("dataset_catalogue.views.DatasetDetails")
     def test_get_context_data_with_kwargs(self, MockDatasetDetails):
-        mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
-
-        request = self.factory.get("/mock-dataset/v1.0.0")
-        request.kwargs = mock_kwargs
+        request = self.factory.get("/dataset-id-mock-dataset/v1.0.0")
+        request.kwargs = self.mock_kwargs
 
         self.view.request = request
 
@@ -37,7 +37,7 @@ class TestDatasetDetailView(TestCase):
         response = self.client.get(
             reverse(
                 "dataset_details_view",
-                kwargs=mock_kwargs,
+                kwargs=self.mock_kwargs,
             )
         )
 
@@ -48,10 +48,8 @@ class TestDatasetDetailView(TestCase):
 
     @patch("dataset_catalogue.views.DatasetDetails")
     def test_get_context_data_with_kwargs_has_tables(self, MockDatasetDetails):
-        mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
-
-        request = self.factory.get("/mock-dataset/v1.0.0")
-        request.kwargs = mock_kwargs
+        request = self.factory.get("/dataset-id-mock-dataset/v1.0.0")
+        request.kwargs = self.mock_kwargs
 
         self.view.request = request
 
@@ -64,7 +62,7 @@ class TestDatasetDetailView(TestCase):
         response = self.client.get(
             reverse(
                 "dataset_details_view",
-                kwargs=mock_kwargs,
+                kwargs=self.mock_kwargs,
             )
         )
 
@@ -75,10 +73,8 @@ class TestDatasetDetailView(TestCase):
 
     @patch("dataset_catalogue.views.DatasetDetails")
     def test_get_context_data_with_kwargs_has_reports(self, MockDatasetDetails):
-        mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
-
-        request = self.factory.get("/mock-dataset/v1.0.0")
-        request.kwargs = mock_kwargs
+        request = self.factory.get("/dataset-id-mock-dataset/v1.0.0")
+        request.kwargs = self.mock_kwargs
 
         self.view.request = request
 
@@ -91,7 +87,7 @@ class TestDatasetDetailView(TestCase):
         response = self.client.get(
             reverse(
                 "dataset_details_view",
-                kwargs=mock_kwargs,
+                kwargs=self.mock_kwargs,
             )
         )
 
@@ -104,10 +100,8 @@ class TestDatasetDetailView(TestCase):
     def test_get_context_data_with_kwargs_has_tables_and_reports(
         self, MockDatasetDetails
     ):
-        mock_kwargs = {"dataset_id": "mock-dataset", "version": "v1.0.0"}
-
-        request = self.factory.get("/mock-dataset/v1.0.0")
-        request.kwargs = mock_kwargs
+        request = self.factory.get("/dataset-id-mock-dataset/v1.0.0")
+        request.kwargs = self.mock_kwargs
 
         self.view.request = request
 
@@ -123,7 +117,7 @@ class TestDatasetDetailView(TestCase):
         response = self.client.get(
             reverse(
                 "dataset_details_view",
-                kwargs=mock_kwargs,
+                kwargs=self.mock_kwargs,
             )
         )
 
