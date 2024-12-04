@@ -42,17 +42,31 @@
   >
     <details class="govuk-details">
       <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text"
+        <span
+          class="govuk-details__summary-text"
+          data-testid="data-columns-metadata"
           >{{data_type}} columns metadata
         </span>
       </summary>
       <div class="govuk-!-static-padding-top-3">
         {% if columns_metadata %}
-        <table class="govuk-table">
+        <table class="govuk-table" data-testid="metadata-table">
           <thead class="govuk-table__head">
             <tr class="govuk-table__row">
-              <th scope="col" class="govuk-table__header">Column name</th>
-              <th scope="col" class="govuk-table__header">Description</th>
+              <th
+                scope="col"
+                class="govuk-table__header"
+                data-testid="metadata-column"
+              >
+                Column name
+              </th>
+              <th
+                scope="col"
+                class="govuk-table__header"
+                data-testid="metadata-description"
+              >
+                Description
+              </th>
             </tr>
           </thead>
           <tbody class="govuk-table__body">
@@ -175,11 +189,13 @@
       </ul>
     </nav>
   </div>
-  <p class="row-count govuk-body-s">{{row_count}} rows</p>
+  <p class="row-count govuk-body-s" data-testid="row-count">
+    {{row_count}} rows
+  </p>
 </div>
 <div class="data-preview-scroll-box">
   <div class="data-preview-content">
-    <table class="govuk-table">
+    <table class="govuk-table" data-testid="data-table">
       <thead class="data-preview-headers">
         <tr class="govuk-table__row">
           {% for header in data_headers %}
