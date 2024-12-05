@@ -38,14 +38,17 @@ describe("Dataset data preview page", () => {
     });
 
     it("Should display the corret number of rows", () => {
-      //   cy.get(".row-count")
-      //     .its("length")
-      //     .then((rowCount) => {
-      cy.get('p[data-testid="row-count"]').should("contain", "236 rows");
-      // });
+      cy.get('p[data-testid="row-count"]')
+        .invoke("attr", "data-row-count")
+        .then((rowCount) => {
+          cy.get('p[data-testid="row-count"]').should(
+            "contain",
+            `${rowCount} rows`
+          );
+        });
     });
 
-    it.only("Should display the table or report table", () => {
+    it("Should display the table or report table", () => {
       cy.get('table[data-testid="data-table"]').should("exist");
       cy.get(".data-preview-headers").should("exist");
       cy.get(".data-preview-body")
