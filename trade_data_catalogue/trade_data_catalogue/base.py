@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView
 
 from .utils import (
+    REGEX_PATTERNS,
     get_transformed_string_from_pattern,
     is_string_a_version,
     is_string_a_dataset_id,
@@ -48,8 +49,7 @@ class BaseBreadcrumbView(TemplateView):
         )
         title_cased_dataset_id = dehyphenated_dataset_id.title()
 
-        regex_patterns = [r"\b(Uk|Eu)\b", r"\b[iI][dD]\b"]
-        for pattern in regex_patterns:
+        for pattern in REGEX_PATTERNS.values():
             title_cased_dataset_id = get_transformed_string_from_pattern(
                 title_cased_dataset_id, pattern
             )
