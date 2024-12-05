@@ -53,6 +53,7 @@ class DatasetDetailsView(BaseBreadcrumbView):
         version = kwargs.get("version")
 
         dataset = DatasetDetails(dataset_id, version)
+
         context["dataset"] = dataset
 
         if hasattr(dataset, "tables"):
@@ -117,20 +118,14 @@ class DatasetDataPreviewView(BaseBreadcrumbView):
 
         return context
 
-    def download_csv(self, dataset):
-        data_object = dataset.data_object
-
-        response = HttpResponse(content_type="text/csv")
-        response["Content-Disposition"] = f'attachment; filename="{dataset.id}-{dataset.version}-{data_object.id}.csv"'
-
-        writer = csv.writer(response)
-        writer.writerow(data_object.csv_headers)
-
-        for row in data_object.csv_rows:
-            writer.writerow(row)
+    def download_csv(self, dataset_id, version, data_id, csv_data):
+        response = HttpResponse(csv_data, content_type="text/csv")
+        response["Content-Disposition"] = (
+            f'attachment; filename="{dataset_id}-{version}-{data_id}.csv"'
+        )
 
         return response
-    
+
     def get(self, request, *args, **kwargs):
         if "download" in request.GET:
             dataset_id = kwargs.get("dataset_id")
@@ -138,8 +133,9 @@ class DatasetDataPreviewView(BaseBreadcrumbView):
             data_type = kwargs.get("data_type")
             data_id = kwargs.get("data_id")
 
-            dataset = DatasetDataPreview(dataset_id, version, data_type, data_id)
+            data_url = f"{BASE_API_URL}/v1/datasets/{dataset_id}/versions/{version}/{data_type}s/{data_id}/data?format=csv"
+            fetched_csv_data = fetch_data_from_api(data_url, False, True)
 
-            return self.download_csv(dataset)
-        
+            return self.download_csv(dataset_id, version, data_id, fetched_csv_data)
+
         return super().get(request, *args, **kwargs)
