@@ -354,11 +354,17 @@
     </p>
     <details class="govuk-details">
       <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text"> Previous versions </span>
+        <span
+          class="govuk-details__summary-text"
+          data-testid="versions-dropdown"
+        >
+          Previous versions
+        </span>
       </summary>
       <div class="govuk-!-static-padding-top-3">
         {% for version in dataset.versions %}
         <a
+          data-testid="version"
           class="govuk-link govuk-!-static-padding-right-3"
           href="{% url 'dataset_details_view' dataset_id=dataset.id version=version %}"
           >{{version}}</a
