@@ -1,5 +1,6 @@
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import (
+    REGEX_PATTERNS,
     fetch_data_from_api,
     get_transformed_string_from_pattern,
     read_and_parse_raw_csv_data,
@@ -25,15 +26,13 @@ class Dataset:
     def get_formatted_dataset_title(self, dataset_id):
         dehyphenated_dataset_id = dataset_id.replace("-", " ").replace(".", " ")
         title_cased_dataset_id = dehyphenated_dataset_id.title()
-        dataset_title_with_correct_region = get_transformed_string_from_pattern(
-            title_cased_dataset_id, r"\b(Uk|Eu)\b"
-        )
-        dataset_title_with_correct_id_capitalisation = (
-            get_transformed_string_from_pattern(
-                dataset_title_with_correct_region, r"\b[iI][dD]\b"
+
+        for pattern in REGEX_PATTERNS.values():
+            title_cased_dataset_id = get_transformed_string_from_pattern(
+                title_cased_dataset_id, pattern
             )
-        )
-        return dataset_title_with_correct_id_capitalisation
+
+        return title_cased_dataset_id
 
     def get_all_dataset_versions(self, url):
         json_data = fetch_data_from_api(url)
@@ -164,15 +163,13 @@ class BaseDatasetDataObject:
     def get_formatted_data_object_title(self, data_object_id):
         dehyphenated_data_object_id = data_object_id.replace("-", " ").replace(".", " ")
         title_cased_data_object_id = dehyphenated_data_object_id.title()
-        data_object_title_with_correct_region = get_transformed_string_from_pattern(
-            title_cased_data_object_id, r"\b(Uk|Eu)\b"
-        )
-        data_object_with_correct_id_capitalisation = (
-            get_transformed_string_from_pattern(
-                data_object_title_with_correct_region, r"\b[iI][dD]\b"
+
+        for pattern in REGEX_PATTERNS.values():
+            title_cased_data_object_id = get_transformed_string_from_pattern(
+                title_cased_data_object_id, pattern
             )
-        )
-        return data_object_with_correct_id_capitalisation
+
+        return title_cased_data_object_id
 
 
 class Column:
