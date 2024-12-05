@@ -2,6 +2,7 @@ import requests, re, csv
 
 
 BASE_API_URL = "https://data.api.trade.gov.uk"
+REGEX_PATTERNS = {"eu": r"\b(Uk|Eu)\b", "id": r"\b[iI][dD]\b"}
 
 
 def fetch_data_from_api(url, as_json=True, stream=False):
