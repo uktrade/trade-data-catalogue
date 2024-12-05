@@ -43,10 +43,16 @@ class BaseBreadcrumbView(TemplateView):
 
     def get_formatted_dataset_breadcrumb_title(self, dataset_id):
         remove_dataset_id_text = dataset_id.replace("dataset-id", "")
-        dehyphenated_dataset_id = remove_dataset_id_text.replace("-", " ")
+        dehyphenated_dataset_id = remove_dataset_id_text.replace("-", " ").replace(
+            ".", " "
+        )
         title_cased_dataset_id = dehyphenated_dataset_id.title()
         dataset_title_with_correct_region = get_transformed_string_from_pattern(
             title_cased_dataset_id, r"\b(Uk|Eu)\b"
         )
-
-        return dataset_title_with_correct_region
+        dataset_title_with_correct_id_capitalisation = (
+            get_transformed_string_from_pattern(
+                dataset_title_with_correct_region, r"\b[iI][dD]\b"
+            )
+        )
+        return dataset_title_with_correct_id_capitalisation
