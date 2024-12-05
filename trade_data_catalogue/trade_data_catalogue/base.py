@@ -47,12 +47,11 @@ class BaseBreadcrumbView(TemplateView):
             ".", " "
         )
         title_cased_dataset_id = dehyphenated_dataset_id.title()
-        dataset_title_with_correct_region = get_transformed_string_from_pattern(
-            title_cased_dataset_id, r"\b(Uk|Eu)\b"
-        )
-        dataset_title_with_correct_id_capitalisation = (
-            get_transformed_string_from_pattern(
-                dataset_title_with_correct_region, r"\b[iI][dD]\b"
+
+        regex_patterns = [r"\b(Uk|Eu)\b", r"\b[iI][dD]\b"]
+        for pattern in regex_patterns:
+            title_cased_dataset_id = get_transformed_string_from_pattern(
+                title_cased_dataset_id, pattern
             )
-        )
-        return dataset_title_with_correct_id_capitalisation
+
+        return title_cased_dataset_id
