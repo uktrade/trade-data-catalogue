@@ -23,12 +23,17 @@ class Dataset:
             self.latest_version = self.get_latest_version(self.versions)
 
     def get_formatted_dataset_title(self, dataset_id):
-        dehyphenated_dataset_id = dataset_id.replace("-", " ")
+        dehyphenated_dataset_id = dataset_id.replace("-", " ").replace(".", " ")
         title_cased_dataset_id = dehyphenated_dataset_id.title()
         dataset_title_with_correct_region = get_transformed_string_from_pattern(
             title_cased_dataset_id, r"\b(Uk|Eu)\b"
         )
-        return dataset_title_with_correct_region
+        dataset_title_with_correct_id_capitalisation = (
+            get_transformed_string_from_pattern(
+                dataset_title_with_correct_region, r"\b[iI][dD]\b"
+            )
+        )
+        return dataset_title_with_correct_id_capitalisation
 
     def get_all_dataset_versions(self, url):
         json_data = fetch_data_from_api(url)
@@ -162,7 +167,12 @@ class BaseDatasetDataObject:
         data_object_title_with_correct_region = get_transformed_string_from_pattern(
             title_cased_data_object_id, r"\b(Uk|Eu)\b"
         )
-        return data_object_title_with_correct_region
+        data_object_with_correct_id_capitalisation = (
+            get_transformed_string_from_pattern(
+                data_object_title_with_correct_region, r"\b[iI][dD]\b"
+            )
+        )
+        return data_object_with_correct_id_capitalisation
 
 
 class Column:
