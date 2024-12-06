@@ -40,7 +40,9 @@
         {{dataset.data_object.size}} {{data_type_lower}}
       </div>
     </div>
-    <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
+    <p class="govuk-body govuk-!-static-margin-top-3">
+      {{dataset.data_object.subtitle}}
+    </p>
   </div>
 
   {% if row_count >= row_limit %}
