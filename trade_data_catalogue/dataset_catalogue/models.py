@@ -135,9 +135,9 @@ class BaseDatasetDataObject:
     def set_raw_csv_data(self):
         self.raw_csv_data = self.get_raw_csv_data(self.data_url)
 
-    def set_csv_data(self, limit_rows):
+    def set_csv_data(self, row_limit=None):
         self.csv_headers, self.csv_rows, self.csv_row_count = (
-            read_and_parse_raw_csv_data(self.raw_csv_data, limit_rows=limit_rows)
+            read_and_parse_raw_csv_data(self.raw_csv_data, row_limit=row_limit)
         )
 
     def set_size_messsage(self):
@@ -213,7 +213,7 @@ class DatasetDataPreview(Dataset):
             data_object = DatasetReport(data_id, self)
 
         data_object.set_raw_csv_data()
-        data_object.set_csv_data(False)
+        data_object.set_csv_data(250000)
         return data_object
 
     def get_dataset_metadata(self, url):
