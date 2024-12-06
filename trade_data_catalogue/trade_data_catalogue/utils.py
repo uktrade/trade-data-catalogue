@@ -16,7 +16,7 @@ def fetch_data_from_api(url, as_json=True, stream=False):
         return {"error": "Failed to fetch data"}
 
 
-def read_and_parse_raw_csv_data(response_data, limit_rows=True):
+def read_and_parse_raw_csv_data(response_data, row_limit=None):
     csv_reader = csv.reader(response_data.iter_lines(decode_unicode=True))
 
     headers = next(csv_reader)
@@ -24,8 +24,8 @@ def read_and_parse_raw_csv_data(response_data, limit_rows=True):
     row_count = 0
 
     for row in csv_reader:
-        if limit_rows:
-            if row_count == 10000:
+        if row_limit:
+            if row_count == row_limit:
                 break
         row_count += 1
         rows.append(row)
