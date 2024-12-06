@@ -62,7 +62,7 @@ class DatasetDetailsView(BaseBreadcrumbView):
             tables_page = tables_paginator.get_page(tables_page_number)
             for table in tables_page:
                 table.set_raw_csv_data()
-                table.set_csv_data(True)
+                table.set_csv_data(10000)
                 table.set_size_messsage()
             context["tables_page"] = tables_page
 
@@ -72,7 +72,7 @@ class DatasetDetailsView(BaseBreadcrumbView):
             reports_page = reports_paginator.get_page(reports_page_number)
             for report in reports_page:
                 report.set_raw_csv_data()
-                report.set_csv_data(True)
+                report.set_csv_data(10000)
                 report.set_size_messsage()
             context["reports_page"] = reports_page
 
