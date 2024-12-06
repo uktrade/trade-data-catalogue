@@ -27,12 +27,19 @@
     class="govuk-!-static-margin-bottom-5"
     data-testid="dataset-data-preview-header-container"
   >
-    <h1
-      class="govuk-heading-l govuk-!-static-margin-bottom-2"
-      data-testid="dataset-data-preview-header"
-    >
-      {{dataset.data_object.title}}
-    </h1>
+    <div class="heading-and-tag-container">
+      <h1
+        class="govuk-heading-l govuk-!-static-margin-bottom-0"
+        data-testid="dataset-data-preview-header"
+      >
+        {{dataset.data_object.title}}
+      </h1>
+      <div
+        class="govuk-tag {% if dataset.data_object.size == 'Small' %}govuk-tag--green{% elif dataset.data_object.size == 'Medium' %}govuk-tag--yellow{% elif dataset.data_object.size == 'Large' %}govuk-tag--red{% endif %} govuk-!-static-margin-left-4"
+      >
+        {{dataset.data_object.size}} {{data_type_lower}}
+      </div>
+    </div>
     <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
   </div>
 
