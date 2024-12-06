@@ -118,8 +118,12 @@ class DatasetDataPreviewView(BaseBreadcrumbView):
 
         return context
 
-    def download_csv(self, dataset_id, version, data_id, csv_data):
-        response = HttpResponse(csv_data, content_type="text/csv")
+    def download_csv(self, dataset_id, version, data_type, data_id):
+        data_url = f"{BASE_API_URL}/v1/datasets/{dataset_id}/versions/{version}/{data_type}s/{data_id}/data?format=csv"
+
+        fetched_csv_data = fetch_data_from_api(data_url, False, True)
+
+        response = HttpResponse(fetched_csv_data, content_type="text/csv")
         response["Content-Disposition"] = (
             f'attachment; filename="{dataset_id}-{version}-{data_id}.csv"'
         )
@@ -133,9 +137,6 @@ class DatasetDataPreviewView(BaseBreadcrumbView):
             data_type = kwargs.get("data_type")
             data_id = kwargs.get("data_id")
 
-            data_url = f"{BASE_API_URL}/v1/datasets/{dataset_id}/versions/{version}/{data_type}s/{data_id}/data?format=csv"
-            fetched_csv_data = fetch_data_from_api(data_url, False, True)
-
-            return self.download_csv(dataset_id, version, data_id, fetched_csv_data)
+            return self.download_csv(dataset_id, version, data_type, data_id)
 
         return super().get(request, *args, **kwargs)
