@@ -36,6 +36,17 @@
     <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
   </div>
 
+  {% if row_count >= row_limit %}
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-visually-hidden">Warning</span>
+      This {{data_type_lower}} contains a large number of rows. To ensure
+      optimal performance, the number of rows displayed has been limited.
+    </strong>
+  </div>
+  {% endif %}
+
   <div
     class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-9"
     data-testid="previous-versions-container"
