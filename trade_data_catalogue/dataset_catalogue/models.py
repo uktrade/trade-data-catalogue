@@ -215,6 +215,7 @@ class DatasetDataPreview(Dataset):
 
         data_object.set_raw_csv_data()
         data_object.set_csv_data(ROW_LIMIT)
+        data_object.set_size_messsage()
         return data_object
 
     def get_dataset_metadata(self, url):
