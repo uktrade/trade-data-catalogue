@@ -1,10 +1,12 @@
 from django.http import HttpResponse
 from django.views.generic import TemplateView
 from django.core.paginator import Paginator
-import csv
 
-from trade_data_catalogue.utils import BASE_API_URL
-from trade_data_catalogue.utils import fetch_data_from_api
+from trade_data_catalogue.utils import (
+    BASE_API_URL,
+    ROW_LIMIT,
+    fetch_data_from_api,
+)
 
 from .models import Dataset, DatasetDetails, DatasetDataPreview
 from trade_data_catalogue.base import BaseBreadcrumbView
@@ -109,12 +111,14 @@ class DatasetDataPreviewView(BaseBreadcrumbView):
         if hasattr(dataset.data_object, "columns"):
             context["columns_metadata"] = dataset.data_object.columns
 
+        context["data_type_lower"] = data_type
         context["data_type"] = data_type.title()
         context["data_headers"] = dataset.data_object.csv_headers
         context["row_count"] = dataset.data_object.csv_row_count
         context["rows_page"] = rows_page
         context["lower_rows_threshold"] = lower_rows_threshold
         context["upper_rows_threshold"] = upper_rows_threshold
+        context["row_limit"] = ROW_LIMIT
 
         return context
 
