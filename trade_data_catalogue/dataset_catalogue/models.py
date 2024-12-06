@@ -1,6 +1,7 @@
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import (
     REGEX_PATTERNS,
+    ROW_LIMIT,
     fetch_data_from_api,
     get_transformed_string_from_pattern,
     read_and_parse_raw_csv_data,
@@ -135,9 +136,9 @@ class BaseDatasetDataObject:
     def set_raw_csv_data(self):
         self.raw_csv_data = self.get_raw_csv_data(self.data_url)
 
-    def set_csv_data(self, limit_rows):
+    def set_csv_data(self, row_limit=None):
         self.csv_headers, self.csv_rows, self.csv_row_count = (
-            read_and_parse_raw_csv_data(self.raw_csv_data, limit_rows=limit_rows)
+            read_and_parse_raw_csv_data(self.raw_csv_data, row_limit=row_limit)
         )
 
     def set_size_messsage(self):
@@ -213,7 +214,8 @@ class DatasetDataPreview(Dataset):
             data_object = DatasetReport(data_id, self)
 
         data_object.set_raw_csv_data()
-        data_object.set_csv_data(False)
+        data_object.set_csv_data(ROW_LIMIT)
+        data_object.set_size_messsage()
         return data_object
 
     def get_dataset_metadata(self, url):

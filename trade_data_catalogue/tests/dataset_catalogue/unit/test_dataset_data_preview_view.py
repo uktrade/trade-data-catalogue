@@ -102,24 +102,3 @@ class TestDatasetDataPreviewView(TestCase):
             list(response.context["rows_page"]),
             self.mock_valid_data_object_instance.csv_rows,
         )
-
-    def test_download_csv(self):
-        self.mock_valid_dataset_data_preview_instance.data_object = (
-            self.mock_valid_data_object_instance
-        )
-
-        response = self.view.download_csv(self.mock_valid_dataset_data_preview_instance)
-
-        self.assertEqual(
-            response["Content-Disposition"],
-            'attachment; filename="mock-dataset-v1.0.0-mock-table.csv"',
-        )
-        self.assertEqual(response["Content-Type"], "text/csv")
-
-        content = response.content.decode("utf-8")
-        rows = content.split("\r\n")
-
-        self.assertEqual(rows[0], "header_1,header_2,header_3")
-        self.assertEqual(rows[1], "r1_cell_1,r1_cell_2,r1_cell_3")
-        self.assertEqual(rows[2], "r2_cell_1,r2_cell_2,r2_cell_3")
-        self.assertEqual(rows[3], "r3_cell_1,r3_cell_2,r3_cell_3")

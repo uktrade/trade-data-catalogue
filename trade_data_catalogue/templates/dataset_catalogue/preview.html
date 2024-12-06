@@ -27,14 +27,35 @@
     class="govuk-!-static-margin-bottom-5"
     data-testid="dataset-data-preview-header-container"
   >
-    <h1
-      class="govuk-heading-l govuk-!-static-margin-bottom-2"
-      data-testid="dataset-data-preview-header"
-    >
-      {{dataset.data_object.title}}
-    </h1>
-    <p class="govuk-body">{{dataset.data_object.subtitle}}</p>
+    <div class="heading-and-tag-container">
+      <h1
+        class="govuk-heading-l govuk-!-static-margin-bottom-0"
+        data-testid="dataset-data-preview-header"
+      >
+        {{dataset.data_object.title}}
+      </h1>
+      <div
+        class="govuk-tag {% if dataset.data_object.size == 'Small' %}govuk-tag--green{% elif dataset.data_object.size == 'Medium' %}govuk-tag--yellow{% elif dataset.data_object.size == 'Large' %}govuk-tag--red{% endif %} govuk-!-static-margin-left-4"
+      >
+        {{dataset.data_object.size}} {{data_type_lower}}
+      </div>
+    </div>
+    <p class="govuk-body govuk-!-static-margin-top-3">
+      {{dataset.data_object.subtitle}}
+    </p>
   </div>
+
+  {% if row_count >= row_limit %}
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-visually-hidden">Warning</span>
+      This {{data_type_lower}} contains a large number of rows. To ensure
+      optimal performance, the number of rows available to preview has been
+      limited.
+    </strong>
+  </div>
+  {% endif %}
 
   <div
     class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-9"
@@ -118,7 +139,7 @@
     data-module="govuk-button"
     href="?download=true"
   >
-    Download data
+    Download .csv
   </a>
   <div
     class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
