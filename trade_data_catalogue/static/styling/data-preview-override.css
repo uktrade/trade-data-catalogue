@@ -70,3 +70,9 @@
 .row-count {
   margin-bottom: 0;
 }
+
+.heading-and-tag-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
