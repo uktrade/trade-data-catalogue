@@ -1,6 +1,7 @@
 from trade_data_catalogue.utils import BASE_API_URL
 from trade_data_catalogue.utils import (
     REGEX_PATTERNS,
+    ROW_LIMIT,
     fetch_data_from_api,
     get_transformed_string_from_pattern,
     read_and_parse_raw_csv_data,
@@ -213,7 +214,7 @@ class DatasetDataPreview(Dataset):
             data_object = DatasetReport(data_id, self)
 
         data_object.set_raw_csv_data()
-        data_object.set_csv_data(250000)
+        data_object.set_csv_data(ROW_LIMIT)
         return data_object
 
     def get_dataset_metadata(self, url):
