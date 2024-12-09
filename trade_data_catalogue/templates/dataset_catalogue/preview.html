@@ -22,7 +22,6 @@
       {% endfor %}
     </ol>
   </nav>
-
   <div
     class="govuk-!-static-margin-bottom-5"
     data-testid="dataset-data-preview-header-container"
@@ -57,10 +56,7 @@
   </div>
   {% endif %}
 
-  <div
-    class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-9"
-    data-testid="previous-versions-container"
-  >
+  <div class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-6">
     <details class="govuk-details">
       <summary class="govuk-details__summary">
         <span
@@ -130,119 +126,93 @@
         {% endif %}
       </div>
     </details>
+    <hr class="govuk-section-break govuk-section-break--visible" />
   </div>
-</div>
-<hr class="govuk-section-break govuk-section-break--visible" />
-<div class="data-preview-controls govuk-!-static-padding-3">
-  <a
-    class="govuk-button govuk-button--secondary"
-    data-module="govuk-button"
-    href="?download=true"
-  >
-    Download .csv
-  </a>
-  <div
-    class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
-  >
-    <nav class="govuk-pagination" aria-label="Pagination">
-      <ul class="govuk-pagination__list">
-        <li
-          class="{% if rows_page.has_previous %}govuk-pagination__prev {% endif %}"
-        >
-          {% if rows_page.has_previous %}
-          <a
-            class="govuk-link govuk-pagination__link"
-            href="?rows_page={{rows_page.previous_page_number}}"
-            rel="prev"
-          >
-            <svg
-              class="govuk-pagination__icon govuk-pagination__icon--prev"
-              xmlns="http://www.w3.org/2000/svg"
-              height="13"
-              width="15"
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 15 13"
-            >
-              <path
-                d="m6.5938-0.0078125-6.7266 6.7266 6.7441 6.4062 1.377-1.449-4.1856-3.9768h12.896v-2h-12.984l4.2931-4.293-1.414-1.414z"
-              ></path>
-            </svg>
-            <span class="govuk-pagination__link-title">
-              Previous rows<span class="govuk-visually-hidden"> page</span>
-            </span>
-          </a>
-          {% endif %}
-        </li>
 
-        <li class="govuk-pagination__item">
-          Rows {{lower_rows_threshold}}-{{upper_rows_threshold}}
-        </li>
-
-        <li
-          class="{% if rows_page.has_next %}govuk-pagination__next{% endif %}"
-        >
-          {% if rows_page.has_next %}
-          <a
-            class="govuk-link govuk-pagination__link"
-            href="?rows_page={{rows_page.next_page_number}}"
-            rel="next"
-          >
-            <span class="govuk-pagination__link-title">
-              Next rows<span class="govuk-visually-hidden"> page</span>
-            </span>
-            <svg
-              class="govuk-pagination__icon govuk-pagination__icon--next"
-              xmlns="http://www.w3.org/2000/svg"
-              height="13"
-              width="15"
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 15 13"
+  <div>
+    <div class="data-preview-controls govuk-!-static-padding-bottom-3">
+      <a
+        class="govuk-button govuk-button--secondary"
+        data-module="govuk-button"
+        href="?download=true"
+      >
+        Download .csv
+      </a>
+      <div
+        class="{% if rows_page.paginator.num_pages == 1 %}govuk-!-display-none{% endif %}"
+      >
+        <nav class="govuk-pagination" aria-label="Pagination">
+          <ul class="govuk-pagination__list">
+            <li
+              class="{% if rows_page.has_previous %}govuk-pagination__prev {% endif %}"
             >
-              <path
-                d="m8.107-0.0078125-1.4136 1.414 4.2926 4.293h-12.986v2h12.896l-4.1855 3.9766 1.377 1.4492 6.7441-6.4062-6.7246-6.7266z"
-              ></path>
-            </svg>
-          </a>
-          {% endif %}
-        </li>
-      </ul>
-    </nav>
-  </div>
-  <p
-    class="row-count govuk-body-s"
-    data-testid="row-count"
-    data-row-count="{{row_count}}"
-  >
-    {{row_count}} rows
-  </p>
-</div>
-<div class="data-preview-scroll-box">
-  <div class="data-preview-content">
-    <table class="govuk-table" data-testid="data-table">
-      <thead class="data-preview-headers">
-        <tr class="govuk-table__row">
-          {% for header in data_headers %}
-          <th class="govuk-body-s govuk-table__header">
-            <div class="vertical-separator"></div>
-            {{header}}
-          </th>
-          {% endfor %}
-        </tr>
-      </thead>
-      <tbody class="data-preview-body">
-        {% for row in rows_page %}
-        <tr class="govuk-table__row">
-          {% for item in row %}
-          <td class="govuk-body-s govuk-table__cell data-preview-cell">
-            {{item}}
-          </td>
-          {% endfor %}
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+              {% if rows_page.has_previous %}
+              <a
+                class="govuk-link govuk-pagination__link"
+                href="?rows_page={{rows_page.previous_page_number}}"
+                rel="prev"
+              >
+                <span class="govuk-pagination__link-title">
+                  Previous<span class="govuk-visually-hidden"> page</span>
+                </span>
+              </a>
+              {% endif %}
+            </li>
+
+            <li class="govuk-pagination__item">
+              Rows {{lower_rows_threshold}}-{{upper_rows_threshold}}
+            </li>
+
+            <li
+              class="{% if rows_page.has_next %}govuk-pagination__next{% endif %}"
+            >
+              {% if rows_page.has_next %}
+              <a
+                class="govuk-link govuk-pagination__link"
+                href="?rows_page={{rows_page.next_page_number}}"
+                rel="next"
+              >
+                <span class="govuk-pagination__link-title">
+                  Next<span class="govuk-visually-hidden"> page</span>
+                </span>
+              </a>
+              {% endif %}
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <p
+        class="row-count govuk-body-s"
+        data-testid="row-count"
+        data-row-count="{{row_count}}"
+      >
+        {{row_count}} rows
+      </p>
+    </div>
+    <div class="data-preview-scroll-box">
+      <div class="data-preview-content">
+        <table class="govuk-table" data-testid="data-table">
+          <thead class="data-preview-headers">
+            <tr class="govuk-table__row">
+              {% for header in data_headers %}
+              <th class="govuk-table__cell govuk-body-s govuk-table__header">
+                {{header}}
+              </th>
+              {% endfor %}
+            </tr>
+          </thead>
+          <tbody class="data-preview-body">
+            {% for row in rows_page %}
+            <tr class="govuk-table__row">
+              {% for item in row %}
+              <td class="govuk-body-s govuk-table__cell">{{item}}</td>
+              {% endfor %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
