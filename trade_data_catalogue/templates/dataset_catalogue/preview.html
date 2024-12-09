@@ -26,17 +26,21 @@
     class="govuk-!-static-margin-bottom-5"
     data-testid="dataset-data-preview-header-container"
   >
-    <div class="heading-and-tag-container">
-      <h1
-        class="govuk-heading-l govuk-!-static-margin-bottom-0"
-        data-testid="dataset-data-preview-header"
-      >
-        {{dataset.data_object.title}}
-      </h1>
-      <div
-        class="govuk-tag {% if dataset.data_object.size == 'Small' %}govuk-tag--green{% elif dataset.data_object.size == 'Medium' %}govuk-tag--yellow{% elif dataset.data_object.size == 'Large' %}govuk-tag--red{% endif %} govuk-!-static-margin-left-4"
-      >
-        {{dataset.data_object.size}} {{data_type_lower}}
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <h1
+          class="table-heading govuk-heading-l govuk-!-static-margin-bottom-0"
+          data-testid="dataset-data-preview-header"
+        >
+          {{dataset.data_object.title}}
+        </h1>
+      </div>
+      <div class="tag-container govuk-grid-column-one-third">
+        <div
+          class="govuk-tag {% if dataset.data_object.size == 'Small' %}govuk-tag--green{% elif dataset.data_object.size == 'Medium' %}govuk-tag--yellow{% elif dataset.data_object.size == 'Large' %}govuk-tag--red{% endif %} govuk-!-static-margin-left-4"
+        >
+          {{dataset.data_object.size}} {{data_type_lower}}
+        </div>
       </div>
     </div>
     <p class="govuk-body govuk-!-static-margin-top-3">
@@ -79,7 +83,7 @@
               </th>
               <th
                 scope="col"
-                class="govuk-table__header"
+                class="govuk-table__header govuk-table__cell"
                 data-testid="metadata-description"
               >
                 Description
