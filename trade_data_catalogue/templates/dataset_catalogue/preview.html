@@ -22,123 +22,115 @@
       {% endfor %}
     </ol>
   </nav>
-</div>
-<div class="main-data-preview-container govuk-grid-row">
-  <hr class="govuk-section-break govuk-section-break--visible" />
-  <div class="govuk-grid-column-one-third govuk-!-static-padding-5">
-    <div class="govuk-width-container">
-      <div
-        class="govuk-!-static-margin-bottom-5"
-        data-testid="dataset-data-preview-header-container"
+  <div
+    class="govuk-!-static-margin-bottom-5"
+    data-testid="dataset-data-preview-header-container"
+  >
+    <div class="heading-and-tag-container">
+      <h1
+        class="govuk-heading-l govuk-!-static-margin-bottom-0"
+        data-testid="dataset-data-preview-header"
       >
-        <div class="heading-and-tag-container">
-          <h1
-            class="govuk-heading-l govuk-!-static-margin-bottom-0"
-            data-testid="dataset-data-preview-header"
-          >
-            {{dataset.data_object.title}}
-          </h1>
-          <div
-            class="govuk-tag {% if dataset.data_object.size == 'Small' %}govuk-tag--green{% elif dataset.data_object.size == 'Medium' %}govuk-tag--yellow{% elif dataset.data_object.size == 'Large' %}govuk-tag--red{% endif %} govuk-!-static-margin-left-4"
-          >
-            {{dataset.data_object.size}} {{data_type_lower}}
-          </div>
-        </div>
-        <p class="govuk-body govuk-!-static-margin-top-3">
-          {{dataset.data_object.subtitle}}
-        </p>
-      </div>
-
-      {% if row_count >= row_limit %}
-      <div class="govuk-warning-text">
-        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-        <strong class="govuk-warning-text__text">
-          <span class="govuk-visually-hidden">Warning</span>
-          This {{data_type_lower}} contains a large number of rows. To ensure
-          optimal performance, the number of rows available to preview has been
-          limited.
-        </strong>
-      </div>
-      {% endif %}
-
+        {{dataset.data_object.title}}
+      </h1>
       <div
-        class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-9"
-        data-testid="previous-versions-container"
+        class="govuk-tag {% if dataset.data_object.size == 'Small' %}govuk-tag--green{% elif dataset.data_object.size == 'Medium' %}govuk-tag--yellow{% elif dataset.data_object.size == 'Large' %}govuk-tag--red{% endif %} govuk-!-static-margin-left-4"
       >
-        <details class="govuk-details">
-          <summary class="govuk-details__summary">
-            <span
-              class="govuk-details__summary-text"
-              data-testid="data-columns-metadata"
-              >{{data_type}} columns metadata
-            </span>
-          </summary>
-          <div class="govuk-!-static-padding-top-3">
-            {% if columns_metadata %}
-            <table class="govuk-table" data-testid="metadata-table">
-              <thead class="govuk-table__head">
-                <tr class="govuk-table__row">
-                  <th
-                    scope="col"
-                    class="govuk-table__header"
-                    data-testid="metadata-column"
-                  >
-                    Column name
-                  </th>
-                  <th
-                    scope="col"
-                    class="govuk-table__header"
-                    data-testid="metadata-description"
-                  >
-                    Description
-                  </th>
-                </tr>
-              </thead>
-              <tbody class="govuk-table__body">
-                {% for column in columns_metadata %}
-                <tr class="govuk-table__row">
-                  <th scope="row" class="govuk-table__header govuk-body-s">
-                    {{column.name}}
-                  </th>
-                  <td class="govuk-table__cell govuk-body-s">
-                    {{column.description}}
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-
-            {% else %}
-
-            <div
-              class="govuk-notification-banner"
-              role="region"
-              aria-labelledby="govuk-notification-banner-title"
-              data-module="govuk-notification-banner"
-            >
-              <div class="govuk-notification-banner__header">
-                <h2
-                  class="govuk-notification-banner__title"
-                  id="govuk-notification-banner-title"
-                >
-                  Important
-                </h2>
-              </div>
-              <div class="govuk-notification-banner__content">
-                <h3 class="govuk-notification-banner__heading">
-                  {{data_type}} metadata currently not available
-                </h3>
-                <p class="govuk-body">No column metadata is available.</p>
-              </div>
-            </div>
-            {% endif %}
-          </div>
-        </details>
+        {{dataset.data_object.size}} {{data_type_lower}}
       </div>
     </div>
+    <p class="govuk-body govuk-!-static-margin-top-3">
+      {{dataset.data_object.subtitle}}
+    </p>
   </div>
-  <div class="govuk-grid-column-two-thirds">
-    <div class="data-preview-controls govuk-!-static-padding-3">
+
+  {% if row_count >= row_limit %}
+  <div class="govuk-warning-text">
+    <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+    <strong class="govuk-warning-text__text">
+      <span class="govuk-visually-hidden">Warning</span>
+      This {{data_type_lower}} contains a large number of rows. To ensure
+      optimal performance, the number of rows available to preview has been
+      limited.
+    </strong>
+  </div>
+  {% endif %}
+
+  <div class="govuk-!-static-padding-top-3 govuk-!-static-margin-bottom-6">
+    <details class="govuk-details">
+      <summary class="govuk-details__summary">
+        <span
+          class="govuk-details__summary-text"
+          data-testid="data-columns-metadata"
+          >{{data_type}} columns metadata
+        </span>
+      </summary>
+      <div class="govuk-!-static-padding-top-3">
+        {% if columns_metadata %}
+        <table class="govuk-table" data-testid="metadata-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th
+                scope="col"
+                class="govuk-table__header"
+                data-testid="metadata-column"
+              >
+                Column name
+              </th>
+              <th
+                scope="col"
+                class="govuk-table__header"
+                data-testid="metadata-description"
+              >
+                Description
+              </th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for column in columns_metadata %}
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header govuk-body-s">
+                {{column.name}}
+              </th>
+              <td class="govuk-table__cell govuk-body-s">
+                {{column.description}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        {% else %}
+
+        <div
+          class="govuk-notification-banner"
+          role="region"
+          aria-labelledby="govuk-notification-banner-title"
+          data-module="govuk-notification-banner"
+        >
+          <div class="govuk-notification-banner__header">
+            <h2
+              class="govuk-notification-banner__title"
+              id="govuk-notification-banner-title"
+            >
+              Important
+            </h2>
+          </div>
+          <div class="govuk-notification-banner__content">
+            <h3 class="govuk-notification-banner__heading">
+              {{data_type}} metadata currently not available
+            </h3>
+            <p class="govuk-body">No column metadata is available.</p>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </details>
+    <hr class="govuk-section-break govuk-section-break--visible" />
+  </div>
+
+  <div>
+    <div class="data-preview-controls govuk-!-static-padding-bottom-3">
       <a
         class="govuk-button govuk-button--secondary"
         data-module="govuk-button"
@@ -203,10 +195,7 @@
           <thead class="data-preview-headers">
             <tr class="govuk-table__row">
               {% for header in data_headers %}
-              <th class="govuk-body-s govuk-table__header">
-                <div class="vertical-separator"></div>
-                {{header}}
-              </th>
+              <th class="govuk-body-s govuk-table__header">{{header}}</th>
               {% endfor %}
             </tr>
           </thead>
@@ -214,9 +203,7 @@
             {% for row in rows_page %}
             <tr class="govuk-table__row">
               {% for item in row %}
-              <td class="govuk-body-s govuk-table__cell data-preview-cell">
-                {{item}}
-              </td>
+              <td class="govuk-body-s govuk-table__cell">{{item}}</td>
               {% endfor %}
             </tr>
             {% endfor %}
