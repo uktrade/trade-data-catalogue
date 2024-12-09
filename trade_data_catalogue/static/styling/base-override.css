@@ -18,3 +18,8 @@ body {
   flex-direction: column;
   align-items: center;
 }
+
+.crown-and-link {
+  display: flex;
+  flex-direction: column;
+}
