@@ -20,6 +20,7 @@ body {
 
 .data-preview-content {
   display: inline-flex;
+  min-width: 100%;
 }
 
 .data-preview-th {
@@ -48,6 +49,8 @@ body {
   word-wrap: break-word;
   white-space: normal;
   text-align: left;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .govuk-pagination__item:hover {

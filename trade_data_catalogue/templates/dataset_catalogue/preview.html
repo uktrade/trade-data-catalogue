@@ -195,7 +195,9 @@
           <thead class="data-preview-headers">
             <tr class="govuk-table__row">
               {% for header in data_headers %}
-              <th class="govuk-body-s govuk-table__header">{{header}}</th>
+              <th class="govuk-table__cell govuk-body-s govuk-table__header">
+                {{header}}
+              </th>
               {% endfor %}
             </tr>
           </thead>
