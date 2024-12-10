@@ -2,7 +2,11 @@ import requests, re, csv
 
 
 BASE_API_URL = "https://data.api.trade.gov.uk"
-REGEX_PATTERNS = {"eu": r"\b(Uk|Eu)\b", "id": r"\b[iI][dD]\b"}
+REGEX_PATTERNS = {
+    "eu & uk": r"\b(Uk|Eu)\b",
+    "id": r"\b[iI][dD]\b",
+    "reul": r"\b(reul|Reul|rEul|reUl|REul|ReUl|rEUl|REUL)\b",
+}
 ROW_LIMIT = 250000
 
 
