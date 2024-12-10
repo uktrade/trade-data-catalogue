@@ -119,6 +119,40 @@ class DatasetDetails(Dataset):
         return dataset_reports
 
 
+class DatasetDataPreview(Dataset):
+    def __init__(self, id, version, data_type, data_id):
+        super().__init__(id)
+
+        self.version = version
+        self.data_type = data_type
+        self.data_id = data_id
+        self.metadata = self.get_dataset_metadata(
+            f"{self.url}/versions/{self.version}/metadata?format=csvw"
+        )
+        self.data_object = self.get_dataset_data_object(self.data_id, self.data_type)
+
+        if "tables" in self.metadata:
+            self.tables_metadata = self.metadata["tables"]
+            self.data_object.set_column_metadata(self.tables_metadata)
+
+    def get_dataset_data_object(self, data_id, data_type):
+        if data_type == "table":
+            data_object = DatasetTable(data_id, self)
+        if data_type == "report":
+            data_object = DatasetReport(data_id, self)
+
+        data_object.set_raw_csv_data()
+        data_object.set_csv_data(ROW_LIMIT)
+        data_object.set_size_messsage()
+        return data_object
+
+    def get_dataset_metadata(self, url):
+        csvw_data = fetch_data_from_api(url)
+        if csvw_data is None:
+            return None
+        return csvw_data
+
+
 class BaseDatasetDataObject:
     def __init__(self, id, dataset):
         self.id = id
@@ -189,37 +223,3 @@ class DatasetReport(BaseDatasetDataObject):
     def __init__(self, id, dataset):
         super().__init__(id, dataset)
         self.data_url = f"{self.dataset.url}/versions/{self.dataset.version}/reports/{self.id}/data?format=csv"
-
-
-class DatasetDataPreview(Dataset):
-    def __init__(self, id, version, data_type, data_id):
-        super().__init__(id)
-
-        self.version = version
-        self.data_type = data_type
-        self.data_id = data_id
-        self.metadata = self.get_dataset_metadata(
-            f"{self.url}/versions/{self.version}/metadata?format=csvw"
-        )
-        self.data_object = self.get_dataset_data_object(self.data_id, self.data_type)
-
-        if "tables" in self.metadata:
-            self.tables_metadata = self.metadata["tables"]
-            self.data_object.set_column_metadata(self.tables_metadata)
-
-    def get_dataset_data_object(self, data_id, data_type):
-        if data_type == "table":
-            data_object = DatasetTable(data_id, self)
-        if data_type == "report":
-            data_object = DatasetReport(data_id, self)
-
-        data_object.set_raw_csv_data()
-        data_object.set_csv_data(ROW_LIMIT)
-        data_object.set_size_messsage()
-        return data_object
-
-    def get_dataset_metadata(self, url):
-        csvw_data = fetch_data_from_api(url)
-        if csvw_data is None:
-            return None
-        return csvw_data
