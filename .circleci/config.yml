@@ -33,6 +33,7 @@ jobs:
           name: Run Django tests
           command: |
             cd /home/circleci/trade-data-catalogue
+            cp sample.env env
             pip install -r requirements.txt
             . venv/bin/activate
             cd trade_data_catalogue
@@ -48,6 +49,7 @@ jobs:
           name: Start Django server
           command: |
             cd /home/circleci/trade-data-catalogue
+            cp sample.env env
             pip install -r requirements.txt
             . venv/bin/activate
             cd trade_data_catalogue
