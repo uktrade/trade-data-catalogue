@@ -1,9 +1,15 @@
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-azry)o&pb5s59+#g0+$i9l+$*a2i%j-g3hq7sh*9y4&59$5$qd"
+SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise ValueError("No SECRET_KEY in .env file")
 
 DEBUG = True
 

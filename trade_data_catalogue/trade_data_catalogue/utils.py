@@ -1,7 +1,9 @@
-import requests, re, csv
+import os, requests, re, csv
+from dotenv import load_dotenv
 
+load_dotenv()
 
-BASE_API_URL = "https://data.api.trade.gov.uk"
+BASE_API_URL = os.getenv("BASE_API_URL")
 REGEX_PATTERNS = {
     "eu & uk": r"\b(Uk|Eu)\b",
     "id": r"\b[iI][dD]\b",
